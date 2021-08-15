@@ -4,9 +4,9 @@ export const routeDefinitions = {
   incomingListRoute: 'incoming/list',
   incomingEditRoute: 'incoming/edit',
 
-  // Gestion des données de controle
-  controlListRoute: 'control/list', // liste des controles
-  controlStatsRoute: 'control/stats', // Statistiques des controle
+  // Gestion des données de contrôle
+  controlListRoute: 'control/list', // liste des contrôles
+  controlStatsRoute: 'control/stats', // Statistiques des contrôle
 
   // Gestion des droits et Beneficiaires
   rightsListRoute: 'rights/list',
@@ -15,14 +15,14 @@ export const routeDefinitions = {
   recipientsActiveRoute: 'rights/reciepients',
   recipientsInactiveRoute: 'rights/recipients/inactive',
 
-  // Réglages de controles
+  // Réglages de contrôles
   settingsRoute: 'settings',
   migrateDataRoute: 'settings/migrate-data', //Import & Export
   fingersRoute: 'settings/fingers', //Import & Export
   addressRoute: 'settings/addresse', //Import & Export
   rightsTypeRoute: 'settings/rights', // Type of rights
-  devicesRoute: 'settings/devices', //Liste des peripheriques de controle
-  editionsRoute: 'settings/editions', // Editions de controle de vie
-  sessionsRoute: 'settings/sessions', // Liste des sessions de controle par edition
+  devicesRoute: 'settings/devices', //Liste des peripheriques de contrôle
+  editionsRoute: 'settings/editions', // Editions de contrôle de vie
+  sessionsRoute: 'settings/sessions', // Liste des sessions de contrôle par edition
   dataTypesRoute: 'settings/data-type', // Type de donnees biometriques
 };
