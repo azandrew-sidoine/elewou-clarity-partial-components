@@ -1,19 +1,11 @@
 <clr-header class="header">
   <div class="branding">
-    <!-- <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">
-      <span class="title app-logo">
-        <img [src]="elewouLogo" alt="ELEWOU" width="100" height="auto" /></span>
-    </a> -->
     <span class="module_name title"> {{ moduleName }}</span>
   </div>
   <div class="header-nav hide-for-print">
-    <!-- <ng-container *ngFor="let item of routesMap">
-      <a [routerLink]="getRouteLinkFromMap(item.key)?.routePath" routerLinkActive="active" class="nav-link nav-text">{{
-        getRouteLinkFromMap(item.key)?.routeDescription }}</a>
-    </ng-container> -->
   </div>
   <div class="header-actions hide-for-print" *ngIf="state$ | async as state">
-    <clr-dropdown>
+    <clr-dropdown *ngIf="!state?.isGuess">
       <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
         {{ state?.username }}
         <clr-icon shape="caret down"></clr-icon>

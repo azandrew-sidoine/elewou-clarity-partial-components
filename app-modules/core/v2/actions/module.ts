@@ -13,9 +13,9 @@ export interface ModulesState {
   performingAction: boolean;
   items: ModuleV2[];
   pagination: PaginationData<ModuleV2>;
-  createdModule: ModuleV2;
-  updateResult: boolean;
-  deleteResult: boolean;
+  createdModule?: ModuleV2;
+  updateResult?: boolean;
+  deleteResult?: boolean;
   error: any;
 }
 
@@ -108,28 +108,29 @@ export const onModulePaginationDataLoaded = (store: DrewlabsFluxStore<ModulesSta
 export const createModuleAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
   createAction(store, (client: DrewlabsRessourceServerClient, path: string, body: { [index: string]: any }) =>
-    ({
-      type: DefaultStoreAction.ASYNC_UI_ACTION,
-      payload: client.create(path, body)
-        .pipe(
-          map((state) => {
-            // tslint:disable-next-line: one-variable-per-declaration
-            const data = getResponseDataFromHttpResponse(state);
-            if (isDefined(data)) {
-              return moduleCreatedAction(store)(deserializeSerializedModule(data));
-            }
-          }),
-          catchError(err => {
-            if (err instanceof HttpErrorResponse) {
-              const errorResponse = client.handleErrorResponse(err);
-              onErrorAction(store)(errorResponse);
-            } else {
-              onErrorAction(err);
-            }
-            return emptyObservable();
-          })
-        )
-    }));
+  ({
+    type: DefaultStoreAction.ASYNC_UI_ACTION,
+    payload: client.create(path, body)
+      .pipe(
+        map((state) => {
+          // tslint:disable-next-line: one-variable-per-declaration
+          const data = getResponseDataFromHttpResponse(state);
+          if (!isDefined(data)) {
+            return undefined;
+          }
+          return moduleCreatedAction(store)(deserializeSerializedModule(data));
+        }),
+        catchError(err => {
+          if (err instanceof HttpErrorResponse) {
+            const errorResponse = client.handleErrorResponse(err);
+            onErrorAction(store)(errorResponse);
+          } else {
+            onErrorAction(err);
+          }
+          return emptyObservable();
+        })
+      )
+  }));
 
 export const moduleCreatedAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
@@ -139,35 +140,36 @@ export const moduleCreatedAction = (
 export const updateModuleAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
   createAction(store, (client: DrewlabsRessourceServerClient, path: string, id: number | string, body: { [index: string]: any }) =>
-    ({
-      type: DefaultStoreAction.ASYNC_UI_ACTION,
-      payload: client.updateUsingID(path, id, body)
-        .pipe(
-          map((state) => {
-            // tslint:disable-next-line: one-variable-per-declaration
-            const data = getResponseDataFromHttpResponse(state);
-            if (isDefined(data)) {
-              if (isObject(data)) {
-                return moduleUpdatedAction(store)({
-                  item: deserializeSerializedModule(data),
-                  updateResult: true
-                });
-              } else {
-                return moduleUpdatedAction(store)({ updateResult: true });
-              }
-            }
-          }),
-          catchError(err => {
-            if (err instanceof HttpErrorResponse) {
-              const errorResponse = client.handleErrorResponse(err);
-              onErrorAction(store)(errorResponse);
-            } else {
-              onErrorAction(err);
-            }
-            return emptyObservable();
-          })
-        )
-    }));
+  ({
+    type: DefaultStoreAction.ASYNC_UI_ACTION,
+    payload: client.updateUsingID(path, id, body)
+      .pipe(
+        map((state) => {
+          // tslint:disable-next-line: one-variable-per-declaration
+          const data = getResponseDataFromHttpResponse(state);
+          if (!isDefined(data)) {
+            return undefined;
+          }
+          if (isObject(data)) {
+            return moduleUpdatedAction(store)({
+              item: deserializeSerializedModule(data),
+              updateResult: true
+            });
+          } else {
+            return moduleUpdatedAction(store)({ updateResult: true });
+          }
+        }),
+        catchError(err => {
+          if (err instanceof HttpErrorResponse) {
+            const errorResponse = client.handleErrorResponse(err);
+            onErrorAction(store)(errorResponse);
+          } else {
+            onErrorAction(err);
+          }
+          return emptyObservable();
+        })
+      )
+  }));
 
 export const moduleUpdatedAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
@@ -179,35 +181,36 @@ export const moduleUpdatedAction = (
 export const deleteModuleAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
   createAction(store, (client: DrewlabsRessourceServerClient, path: string, id: number | string) =>
-    ({
-      type: DefaultStoreAction.ASYNC_UI_ACTION,
-      payload: client.deleteUsingID(path, id)
-        .pipe(
-          map((state) => {
-            // tslint:disable-next-line: one-variable-per-declaration
-            const data = getResponseDataFromHttpResponse(state);
-            if (isDefined(data)) {
-              if (isObject(data)) {
-                return moduleDeletedAction(store)({
-                  item: deserializeSerializedModule(data),
-                  deleteResult: true
-                });
-              } else {
-                return moduleDeletedAction(store)({ deleteResult: true });
-              }
-            }
-          }),
-          catchError(err => {
-            if (err instanceof HttpErrorResponse) {
-              const errorResponse = client.handleErrorResponse(err);
-              onErrorAction(store)(errorResponse);
-            } else {
-              onErrorAction(err);
-            }
-            return emptyObservable();
-          })
-        )
-    }));
+  ({
+    type: DefaultStoreAction.ASYNC_UI_ACTION,
+    payload: client.deleteUsingID(path, id)
+      .pipe(
+        map((state) => {
+          // tslint:disable-next-line: one-variable-per-declaration
+          const data = getResponseDataFromHttpResponse(state);
+          if (!isDefined(data)) {
+            return undefined;
+          }
+          if (isObject(data)) {
+            return moduleDeletedAction(store)({
+              item: deserializeSerializedModule(data),
+              deleteResult: true
+            });
+          } else {
+            return moduleDeletedAction(store)({ deleteResult: true });
+          }
+        }),
+        catchError(err => {
+          if (err instanceof HttpErrorResponse) {
+            const errorResponse = client.handleErrorResponse(err);
+            onErrorAction(store)(errorResponse);
+          } else {
+            onErrorAction(err);
+          }
+          return emptyObservable();
+        })
+      )
+  }));
 
 export const moduleDeletedAction = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
@@ -218,11 +221,11 @@ export const moduleDeletedAction = (
 export const initialModulesState: ModulesState = {
   items: [],
   pagination: {} as PaginationData<ModuleV2>,
-  createdModule: null,
+  createdModule: undefined,
   performingAction: false,
   error: null,
-  updateResult: null,
-  deleteResult: null
+  updateResult: undefined,
+  deleteResult: undefined
 };
 
 export const resetModulesStore = (store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
@@ -237,28 +240,29 @@ export const resetModulesStore = (store: DrewlabsFluxStore<ModulesState, Partial
 export const getModuleUsingID = (
   store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
   createAction(store, (client: DrewlabsRessourceServerClient, path: string, id: string | number) =>
-    ({
-      type: DefaultStoreAction.ASYNC_UI_ACTION,
-      payload: client.getUsingID(path, id)
-        .pipe(
-          map((state) => {
-            // tslint:disable-next-line: one-variable-per-declaration
-            const data = getResponseDataFromHttpResponse(state);
-            if (isDefined(data)) {
-              return addModuleToList(store)(deserializeSerializedModule(data));
-            }
-          }),
-          catchError(err => {
-            if (err instanceof HttpErrorResponse) {
-              const errorResponse = client.handleErrorResponse(err);
-              onErrorAction(store)(errorResponse);
-            } else {
-              onErrorAction(err);
-            }
-            return emptyObservable();
-          })
-        )
-    }));
+  ({
+    type: DefaultStoreAction.ASYNC_UI_ACTION,
+    payload: client.getUsingID(path, id)
+      .pipe(
+        map((state) => {
+          // tslint:disable-next-line: one-variable-per-declaration
+          const data = getResponseDataFromHttpResponse(state);
+          if (!isDefined(data)) {
+            return undefined;
+          }
+          return addModuleToList(store)(deserializeSerializedModule(data));
+        }),
+        catchError(err => {
+          if (err instanceof HttpErrorResponse) {
+            const errorResponse = client.handleErrorResponse(err);
+            onErrorAction(store)(errorResponse);
+          } else {
+            onErrorAction(err);
+          }
+          return emptyObservable();
+        })
+      )
+  }));
 
 export const addModuleToList = (store: DrewlabsFluxStore<ModulesState, Partial<StoreAction>>) =>
   createAction(store, (payload: ModuleV2) => {

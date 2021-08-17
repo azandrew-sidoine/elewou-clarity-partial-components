@@ -8,6 +8,8 @@ import { createStateful } from 'src/app/lib/core/rxjs/helpers/index';
 import { combineLatest } from 'rxjs';
 import { UIState, UIStateStatusCode } from 'src/app/lib/core/contracts/ui-state';
 import { uiStatusUsingHttpErrorResponse } from 'src/app/lib/core/ui-state';
+import { isBadRequest } from 'src/app/lib/core/http/core/helpers';
+import { doLog } from 'src/app/lib/core/rxjs/operators';
 
 @Component({
   selector: 'app-ui-notification',
@@ -104,7 +106,9 @@ export class AppUINotificationComponent implements OnDestroy {
   }
 
   public get state$() {
-    return this._state$.asObservable();
+    return this._state$.asObservable().pipe(
+      map(state => ({...state, status: isBadRequest(state?.status) ? UIStateStatusCode.BAD_REQUEST : state?.status})),
+    );
   }
 
   @Output() endActionEvent = new EventEmitter<{ status?: number, message?: string }>();
@@ -136,7 +140,7 @@ export class AppUINotificationComponent implements OnDestroy {
     if (value) {
       this._state$.next({
         message: '',
-        status: null,
+        status: undefined,
         hasError: false,
         hidden: true
       });
@@ -151,6 +155,7 @@ export class AppUINotificationComponent implements OnDestroy {
       .registerToConnectionStates();
     httpClient.errorState$.pipe(
       takeUntil(this._destroy$),
+      doLog('HTTP Error State: '),
       tap(
         state => {
           this.endActionEvent.emit({ status: uiStatusUsingHttpErrorResponse(state), message: '' });
