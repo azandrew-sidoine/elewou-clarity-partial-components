@@ -25,4 +25,7 @@ export const routeDefinitions = {
   editionsRoute: 'settings/editions', // Editions de contrôle de vie
   sessionsRoute: 'settings/sessions', // Liste des sessions de contrôle par edition
   dataTypesRoute: 'settings/data-type', // Type de donnees biometriques
+
+
+  receiptRoute: 'receipt', // Type de donnees biometriques
 };
