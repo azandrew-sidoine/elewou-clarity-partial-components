@@ -4,17 +4,7 @@ import { getJSObjectPropertyValue } from 'src/app/lib/domain/utils';
 @Component({
   selector: 'app-detailed-table-preview',
   templateUrl: './detailed-table-preview.component.html',
-  styles: [`
-    th.header {
-      font-weight: bold;
-      height: 2rem;
-      color: var(--clr-card-title-color, black);
-    }
-    .table tbody th, .table tbody td {
-      padding: .55rem .6rem .55rem;
-    }
-  `
-  ]
+  styles: []
 })
 export class DetailedTablePreviewComponent {
 

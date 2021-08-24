@@ -1,8 +1,8 @@
-<table class="table table-vertical table-compact">
+<table class="table table-compact table-vertical">
   <tbody>
     <ng-container *ngFor="let key of mappings">
       <tr *ngIf="!hiddenfields.includes(key)">
-        <th class="header"><span> {{ key | translate | uppercase }}</span></th>
+        <th><span> {{ key | translate | uppercase }}</span></th>
         <td class="left">{{ datefields.includes(headers[key]) ? (getvalue(value, headers[key]) | parseDate) :
           getvalue(value, headers[key]) }}</td>
       </tr>
