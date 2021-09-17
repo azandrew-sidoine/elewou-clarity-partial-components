@@ -21,5 +21,6 @@ export class DatgridHeaderComponent {
   @Input() excelDropDownDisabled = false;
   @Input() showExportDropdown = false;
   @Input() buttonClass = 'btn btn-sm btn-secondary';
-
+  @Input() exportButtonText = 'Exporter les données';
+  @Input() exportButtonDisabled = false;
 }
