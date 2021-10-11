@@ -28,4 +28,8 @@ export const routeDefinitions = {
 
 
   receiptRoute: 'receipt', // Type de donnees biometriques
+
+  rightsBinding: 'right-binding', // liaison des droits
+
+  enrollement: 'enrollement', // enrollement
 };
