@@ -1,27 +1,71 @@
 <ng-container *ngIf="state$ | async as state">
-  <ng-container  *ngIf="state?.routes">
+  <ng-container *ngIf="state?.routes">
     <ng-container *ngFor="let item of routesMap">
-      <clr-vertical-nav-group routerLinkActive="active"
-        *ngIf="typeHelper.isDefined(item?.children) && hasAuthorizations(state?.user, getRouteLinkFromMap(state?.routes, item.key)?.routePermissions)">
-        <clr-icon *ngIf="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon" [attr.shape]="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon"
-          clrVerticalNavIcon></clr-icon>
-        {{ getRouteLinkFromMap(state?.routes, item.key)?.routeDescription }}
+      <clr-vertical-nav-group
+        routerLinkActive="active"
+        *ngIf="
+          typeHelper.isDefined(item?.children) &&
+          hasAuthorizations(
+            state?.user,
+            getRouteLinkFromMap(state?.routes, item.key)?.routePermissions
+          )
+        "
+      >
+        <clr-icon
+          *ngIf="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon"
+          [attr.shape]="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon"
+          clrVerticalNavIcon
+        ></clr-icon>
+        {{
+          getRouteLinkFromMap(state?.routes, item.key)?.routeDescription
+            | uppercase
+        }}
         <clr-vertical-nav-group-children>
-          <ng-container *ngFor="let child of getRouteLinkFromMap(state?.routes, item?.key)?.children">
-            <a clrVerticalNavLink [routerLink]="child?.routePath" routerLinkActive="active"
-              *ngIf="hasAuthorizations(state?.user, child.routePermissions)">
-              <clr-icon *ngIf="child?.routeIcon" [attr.shape]="child?.routeIcon" clrVerticalNavIcon></clr-icon>
-              {{ child.routeDescription }}
+          <ng-container
+            *ngFor="
+              let child of getRouteLinkFromMap(state?.routes, item?.key)
+                ?.children
+            "
+          >
+            <a
+              clrVerticalNavLink
+              [routerLink]="child?.routePath"
+              routerLinkActive="active"
+              *ngIf="hasAuthorizations(state?.user, child.routePermissions)"
+            >
+              <clr-icon
+                *ngIf="child?.routeIcon"
+                [attr.shape]="child?.routeIcon"
+                clrVerticalNavIcon
+              ></clr-icon>
+              {{ child.routeDescription | uppercase }}
             </a>
           </ng-container>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
       <ng-container *ngIf="!typeHelper.isDefined(item?.children)">
-        <a clrVerticalNavLink routerLinkActive="active" [routerLink]="getRouteLinkFromMap(state?.routes, item.key)?.routePath"
-          *ngIf="hasAuthorizations(state?.user, getRouteLinkFromMap(state?.routes, item.key)?.routePermissions)">
-          <clr-icon *ngIf="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon"
-            [attr.shape]="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon" clrVerticalNavIcon></clr-icon>
-          {{ getRouteLinkFromMap(state?.routes, item.key)?.routeDescription }}
+        <a
+          clrVerticalNavLink
+          routerLinkActive="active"
+          [routerLink]="getRouteLinkFromMap(state?.routes, item.key)?.routePath"
+          *ngIf="
+            hasAuthorizations(
+              state?.user,
+              getRouteLinkFromMap(state?.routes, item.key)?.routePermissions
+            )
+          "
+        >
+          <clr-icon
+            *ngIf="getRouteLinkFromMap(state?.routes, item.key)?.routeIcon"
+            [attr.shape]="
+              getRouteLinkFromMap(state?.routes, item.key)?.routeIcon
+            "
+            clrVerticalNavIcon
+          ></clr-icon>
+          {{
+            getRouteLinkFromMap(state?.routes, item.key)?.routeDescription
+              | uppercase
+          }}
         </a>
       </ng-container>
     </ng-container>
