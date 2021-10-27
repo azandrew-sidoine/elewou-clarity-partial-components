@@ -49,6 +49,11 @@ export const accountingRouteDefinitions = {
   actRcapAutomaticRecordsPath: 'rcap-act-automatic-records',
 
   actSelectEntityRoute: 'select-entity',
+
+  //annexes
+  emploisRessources: 'emplois-ressources',
+  amortissement: 'amortissement',
+  provisions: 'provisions',
 };
 
 export enum accountingRouteParams {
