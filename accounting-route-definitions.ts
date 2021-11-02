@@ -50,10 +50,10 @@ export const accountingRouteDefinitions = {
 
   actSelectEntityRoute: 'select-entity',
 
-  // TODO: REMOVE IF CONFLICTS
-  emploisRessources: '',
-  amortissement: '',
-  provisions: '',
+  //annexes
+  emploisRessources: 'emplois-ressources',
+  amortissement: 'amortissement',
+  provisions: 'provisions',
 };
 
 export enum accountingRouteParams {
