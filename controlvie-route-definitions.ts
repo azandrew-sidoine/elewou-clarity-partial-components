@@ -26,9 +26,6 @@ export const routeDefinitions = {
   sessionsRoute: 'settings/sessions', // Liste des sessions de contrôle par edition
   dataTypesRoute: 'settings/data-type', // Type de donnees biometriques
 
-
-  receiptRoute: 'receipt', // Type de donnees biometriques
-
   rightsBinding: 'right-binding', // liaison des droits
 
   enrollement: 'enrollement', // enrollement
