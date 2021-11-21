@@ -12,7 +12,20 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-dossier-files-presenter',
   templateUrl: './dossier-files-presenter.component.html',
-  styles: []
+  styles: [
+    `
+    :host ::ng-deep clr-accordion-title.clr-accordion-title {
+      position: relative !important;
+    }
+    :host ::ng-deep .attached-file-download {
+      display: inline-block !important;
+      position: absolute !important;
+      right: 0 !important;
+      margin-top: -16px !important;
+    }
+
+    `
+  ]
 })
 export class DossierFilesPresenterComponent implements OnDestroy {
   // tslint:disable-next-line: variable-name

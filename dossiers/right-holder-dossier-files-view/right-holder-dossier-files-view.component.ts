@@ -9,7 +9,8 @@ import { RightHolderDossier } from '../state/models/dossier';
 @Component({
   selector: 'app-right-holder-dossier-files-view',
   templateUrl: './right-holder-dossier-files-view.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./right-holder-dossier-files-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RightHolderDossierFilesViewComponent implements OnInit {
 

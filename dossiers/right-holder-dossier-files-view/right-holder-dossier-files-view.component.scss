@@ -1,0 +1,9 @@
+:host ::ng-deep clr-accordion-title.clr-accordion-title, .files-accordion-title {
+  position: relative !important;
+}
+:host ::ng-deep .attached-file-download {
+  display: inline-block !important;
+  position: absolute !important;
+  right: 0 !important;
+  margin-top: -16px !important;
+}
