@@ -56,8 +56,8 @@ export const partialConfigs = {
   liquidationTypeBusinessDayLabel: {
     annuity: {
       id: 2,
-      rtieiBusinessDayLabel: 'rcap_life_annuity_business_days',
-      rcBusinessDayLabel: 'romp_life_annuity_business_days'
+      rtieiBusinessDayLabel: 'rcap_annuity_business_days',
+      rcBusinessDayLabel: 'rcomp_annuity_business_days'
     },
     capital: {
       id: 4,
@@ -76,8 +76,8 @@ export const partialConfigs = {
     },
     invalidityAnnuity: {
       id: 6,
-      rtieiBusinessDayLabel: 'rcap_invalidity_life_annuity_business_day',
-      rcBusinessDayLabel: 'rcomp_invalidity_life_annuity_business_day'
+      rtieiBusinessDayLabel: 'rcap_invalidity_annuity_business_days',
+      rcBusinessDayLabel: 'rcomp_invalidity_annuity_business_days'
     }
   },
   regimes: {
