@@ -15,7 +15,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styles: []
+  styles: [
+    `
+    :host ::ng-deep a.active {
+      font-weight: bold;
+    }
+    `
+  ]
 })
 export class SidebarComponent implements OnInit {
   // public navigationRoutes: Collection<RouteLink>;
