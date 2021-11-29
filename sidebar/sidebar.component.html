@@ -3,13 +3,13 @@
     <clr-vertical-nav-group routerLinkActive="active" *ngIf="typeHelper.isDefined(item?.children) && hasAuthorizations(user, getRouteLinkFromMap(item.key)?.routePermissions)">
       <clr-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon" [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon"
         clrVerticalNavIcon></clr-icon>
-      {{ getRouteLinkFromMap(item.key)?.routeDescription }}
+      {{ getRouteLinkFromMap(item.key)?.routeDescription |uppercase }}
       <clr-vertical-nav-group-children>
         <ng-container *ngFor="let child of getRouteLinkFromMap(item?.key)?.children">
           <a clrVerticalNavLink [routerLink]="child?.routePath" routerLinkActive="active"
             *ngIf="hasAuthorizations(user, child.routePermissions)">
             <clr-icon *ngIf="child?.routeIcon" [attr.shape]="child?.routeIcon" clrVerticalNavIcon></clr-icon>
-            {{ child.routeDescription }}
+            {{ child.routeDescription | uppercase }}
           </a>
         </ng-container>
       </clr-vertical-nav-group-children>
@@ -19,7 +19,7 @@
         *ngIf="hasAuthorizations(user, getRouteLinkFromMap(item.key)?.routePermissions)">
         <clr-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon"
           [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon" clrVerticalNavIcon></clr-icon>
-        {{ getRouteLinkFromMap(item.key)?.routeDescription }}
+        {{ getRouteLinkFromMap(item.key)?.routeDescription | uppercase }}
       </a>
     </ng-container>
   </ng-container>
