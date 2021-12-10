@@ -12,8 +12,6 @@ export const accountingRouteDefinitions = {
   tieiGrandlivreRoute: 'tiei-grand-livre/liste',
   // Manage Deversements
   tieiDeversementsRoute: 'tiei-deversements',
-  // Gestion Etats Comptables
-  tieiEtatsComptablesRoute: 'tiei-etats-comptables',
   // Gestion Etats Financiers
   tieiEtatsFinanciersRoute: 'tiei-etats-financiers',
   tieiEtatsFinanciersBilanRoute: 'tiei-bilan',
