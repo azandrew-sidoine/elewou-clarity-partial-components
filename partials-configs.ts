@@ -1,4 +1,3 @@
-import { backendRoutes } from './backend-route-paths';
 import { immRequestExcelSheetHeaders, rcDncHeaders } from './excel-sheets-headers';
 import { appAccessControlList } from './access-control-list';
 import { routeDefinitions as adminModuleRoutes } from './admin-route-definitions';
@@ -25,7 +24,6 @@ export const partialConfigs = {
     comptabiliteModuleRoutes,
   },
   acl: appAccessControlList,
-  backendRoutesPaths: backendRoutes,
   // clientRoutePaths: clientRoutes,
   immRequestExcelHeaders: immRequestExcelSheetHeaders,
   rcDncExcelHeaders: rcDncHeaders,
@@ -104,8 +102,6 @@ export const contributionPath = contributionsModuleRoutes;
 export const comptabilitePath = comptabiliteModuleRoutes;
 // Admin module path
 export const adminPath = adminModuleRoutes;
-// Route definitions for backend ressources
-export const backendRoutePaths = backendRoutes;
 // Route definitions for clients ressources
 
 // Route definitions for dossiers ressources

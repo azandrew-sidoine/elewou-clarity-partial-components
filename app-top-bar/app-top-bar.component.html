@@ -1,29 +1,45 @@
 <clr-header class="header">
   <div class="branding">
-    <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">
+    <a
+      class="nav-link"
+      [routerLink]="dashboardRoute"
+      rel="noopener"
+      routerLinkActive="active"
+    >
       <span class="title app-logo">{{ applicationName }}</span>
     </a>
-    <span class="module_name title"> {{ moduleName }}</span>
+    <span class="module_name title">{{ moduleName }}</span>
   </div>
   <div class="header-nav hide-for-print">
     <ng-container *ngFor="let item of routesMap">
-      <a [routerLink]="getRouteLinkFromMap(item.key)?.routePath" routerLinkActive="active" class="nav-link nav-text">{{
-        getRouteLinkFromMap(item.key)?.routeDescription }}</a>
+      <a
+        [routerLink]="getRouteLinkFromMap(item.key)?.routePath"
+        routerLinkActive="active"
+        class="nav-link nav-text"
+      >
+        {{ getRouteLinkFromMap(item.key)?.routeDescription }}
+      </a>
     </ng-container>
   </div>
   <div class="header-actions hide-for-print">
     <clr-dropdown>
-      <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
+      <button
+        class="nav-text"
+        clrDropdownTrigger
+        aria-label="open user profile"
+      >
         Mon compte
         <clr-icon shape="caret down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
+        <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">
+          Mon Profil
+        </a>
         <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
         <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
       </clr-dropdown-menu>
     </clr-dropdown>
     <!-- Add modules loader -->
-    <app-app-modules [ressourcePath]='modulesBackendRoute'></app-app-modules>
+    <app-app-modules [backendPath]="backendPath"></app-app-modules>
   </div>
 </clr-header>
