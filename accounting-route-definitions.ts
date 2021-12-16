@@ -50,6 +50,7 @@ export const accountingRouteDefinitions = {
 
   //annexes
   emploisRessources: 'emplois-ressources',
+  immobilisation: 'immobilisation',
   amortissement: 'amortissement',
   provisions: 'provisions',
 };
