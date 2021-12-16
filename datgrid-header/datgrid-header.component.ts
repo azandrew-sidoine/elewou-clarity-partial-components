@@ -27,4 +27,7 @@ export class DatgridHeaderComponent {
   @Input() assignableEntity: string|number;
   @Input() buttonClass = 'btn btn-sm btn-secondary';
 
+  @Input() exportButtonText = 'Exporter les données';
+  @Input() exportButtonDisabled = false;
+
 }
