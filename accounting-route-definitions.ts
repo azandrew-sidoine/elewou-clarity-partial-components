@@ -44,7 +44,7 @@ export const accountingRouteDefinitions = {
 
   // Automatic accouting record configurations
   actAutomaticRecordConfigurationPath: 'settings/act-automatic-records',
-  actRcapAutomaticRecordsPath: 'rcap-act-automatic-records',
+  actAutomaticRecordsPath: 'act-automatic-records',
 
   actSelectEntityRoute: 'select-entity',
 
