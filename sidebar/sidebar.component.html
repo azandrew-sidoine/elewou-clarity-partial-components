@@ -1,5 +1,5 @@
 <div class="user-container" *ngIf="state$ | async as state">
-  <!-- <img [src]="elewouIcon" alt="User Profile" width="32" height="auto" /> -->
+   <img [src]="elewouIcon" alt="User Profile" width="32" height="auto" />
   <clr-dropdown>
     <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
       {{ state?.username }}
