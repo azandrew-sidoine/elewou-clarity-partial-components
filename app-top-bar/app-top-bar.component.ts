@@ -37,7 +37,7 @@ export class AppTopBarComponent implements OnInit {
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes!: string[];
   public dashboardRoute = `/${defaultPath}`;
-  public profileRoute = `/${defaultPath}/${commonRoutes.settings}`;
+  public profileRoute = `/${defaultPath}/${commonRoutes.accountRoute}`;
 
   @Input() public routesMap!: RoutesMap[];
   @Input() routeDescriptions!: { [index: string]: string };
