@@ -28,7 +28,8 @@
   </div>
   <div class="header-nav hide-for-print">
   </div>
-  <div class="header-actions hide-for-print" *ngIf="state$ | async as state">
+  <!-- | async as state" -->
+  <div class="header-actions hide-for-print" *ngIf="state$">
     <clr-dropdown *ngIf="!state?.isGuess">
       <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
         {{ state?.username }}
