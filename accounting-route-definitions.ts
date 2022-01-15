@@ -2,7 +2,6 @@ export const accountingRouteDefinitions = {
   // Register Saisie Ecritures
   tieiSaisieEcrituresRoute: 'tiei-saisie-ecritures',
   tieiAjoutEcrituresRoute: 'add-ecriture',
-  tieiSaisieEcrituresReleveRoute: 'releve-ecriture',
   // Register Saisie Ecritures details
   tieiSaisieEcrituresDetailsRoute: 'tiei-saisie-ecritures/details',
   tieiSaisieEcrituresUpdateRoute: 'tiei-saisie-ecritures/update',
@@ -19,10 +18,6 @@ export const accountingRouteDefinitions = {
 
   // Ordonnance Paramétrages
   tieiParametrageComptesRoute: 'tiei-parametrage-comptes',
-  actBalanceSheetRoute: 'act-parametrage-bilan',
-  actBalanceSheetRootRoute: 'act-parametrage-bilan-root',
-  actResultAccountRoute: 'act-parametrage-resultat',
-  actResultAccountRootRoute: 'act-parametrage-resultat-root',
   actAccountNatureRoute: 'act-parametrage-nature',
   actAccountNatureRootRoute: 'act-parametrage-nature-roots',
 
@@ -53,6 +48,8 @@ export const accountingRouteDefinitions = {
   immobilisation: 'immobilisation',
   amortissement: 'amortissement',
   provisions: 'provisions',
+  tafir1: 'tafir1',
+  tafir2: 'tafir2',
 };
 
 export enum accountingRouteParams {
