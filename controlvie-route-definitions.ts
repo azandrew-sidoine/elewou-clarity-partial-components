@@ -29,4 +29,5 @@ export const routeDefinitions = {
   rightsBinding: 'right-binding', // liaison des droits
 
   enrollement: 'enrollement', // enrollement
+  geolocation: 'geolocation',
 };
