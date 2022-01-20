@@ -47,6 +47,7 @@ export class AppTopBarComponent implements OnInit {
   @Input() routeDescriptions!: { [index: string]: string };
   @Input() public moduleName!: string;
   @Input() public applicationName!: string;
+  @Input() public companyName!: string;
 
   state$ = this.auth.state$.pipe(
     map((state) => state.user as IAppUser),

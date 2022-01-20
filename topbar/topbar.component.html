@@ -1,20 +1,17 @@
 <clr-header class="header">
   <div class="branding">
-    <span class="module_name title"> {{ moduleName }}</span>
-  </div>
-  <div class="header-nav hide-for-print">
+    <span class="module_name title">{{ moduleName }}</span>
+    <span class="module_name title">{{ companyName }}</span>
   </div>
   <div class="header-actions hide-for-print" *ngIf="state$ | async as state">
-    <clr-dropdown *ngIf="!state?.isGuess">
-      <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
-        {{ state?.username }}
-        <clr-icon shape="caret down"></clr-icon>
-      </button>
-      <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
-        <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
-        <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
-      </clr-dropdown-menu>
-    </clr-dropdown>
+    <div class="user-state" *ngIf="!state?.isGuess">
+      <span class="top-hint">Connecté en tant que : </span>
+      <span class="user-name connected"><cds-icon shape="circle" solid></cds-icon> {{ state?.username }}</span>
+    </div>
+    <div class="user-actions">
+      <a (click)="actionLogout($event)" class="btn lik-btn primary-btn">
+        <clr-icon shape="logout"></clr-icon>
+      </a>
+    </div>
   </div>
 </clr-header>
