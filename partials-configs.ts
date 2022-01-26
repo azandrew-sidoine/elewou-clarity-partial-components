@@ -9,7 +9,10 @@ export const partialConfigs = {
       dashboardHomeRoute: 'dashboard/home',
       homeRoute: 'home',
       settings: 'settings',
-      registrationsRoute: 'registration-home',
+      clientsHomeRoute: 'registration-home',
+      clientsAddEditRoute: 'member-edit',
+      clientsViewRoute: 'member-view',
+      procurationsManageRoute: 'procurations-manage',
     },
   }
 };
