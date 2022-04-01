@@ -1,23 +1,23 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import {
   RouteLink,
   RoutesMap,
   routeMapToLink,
   RouteLinkCollectionItemInterface,
-} from "src/app/lib/core/routes";
-import { AuthPathConfig, AuthService } from "src/app/lib/core/auth/core";
-import { Router } from "@angular/router";
-import { TranslationService } from "src/app/lib/core/translator";
-import { defaultPath, commonRoutes } from "../partials-configs";
-import { Collection } from "src/app/lib/core/collections";
-import { Dialog, isDefined } from "src/app/lib/core/utils";
-import { IAppUser } from "../../../core/auth/contracts/v2";
-import { map } from "rxjs/operators";
-import { AppUIStateProvider } from "src/app/lib/core/ui-state";
+} from 'src/app/lib/core/routes';
+import { AuthPathConfig, AuthService } from 'src/app/lib/core/auth/core';
+import { Router } from '@angular/router';
+import { TranslationService } from 'src/app/lib/core/translator';
+import { defaultPath, commonRoutes } from '../partials-configs';
+import { Collection } from 'src/app/lib/core/collections';
+import { Dialog, isDefined } from 'src/app/lib/core/utils';
+import { IAppUser } from '../../../core/auth/contracts/v2';
+import { map } from 'rxjs/operators';
+import { UIStateProvider, UI_STATE_PROVIDER } from 'src/app/lib/core/ui-state';
 
 @Component({
-  selector: "app-top-bar",
-  templateUrl: "./topbar.component.html",
+  selector: 'app-top-bar',
+  templateUrl: './topbar.component.html',
   styles: [
     `
       .title {
@@ -35,8 +35,8 @@ import { AppUIStateProvider } from "src/app/lib/core/ui-state";
 })
 export class AppTopBarComponent implements OnInit {
   // public elewouLogo = '/assets/images/logo-elewou-main.png';
-  public elewouLogo = "/assets/images/logo-elewou-main-dark.png";
-  public elewouIcon = "/assets/images/icon-elewou.png";
+  public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
+  public elewouIcon = '/assets/images/icon-elewou.png';
 
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes!: string[];
@@ -64,7 +64,7 @@ export class AppTopBarComponent implements OnInit {
   );
 
   constructor(
-    public uiState: AppUIStateProvider,
+    @Inject(UI_STATE_PROVIDER) private uiState: UIStateProvider,
     private auth: AuthService,
     private translator: TranslationService,
     private dialog: Dialog,
@@ -107,7 +107,7 @@ export class AppTopBarComponent implements OnInit {
   async actionLogout(event: Event): Promise<void> {
     event.preventDefault();
     const translation = await this.translator
-      .translate("promptLogout")
+      .translate('promptLogout')
       .toPromise();
     if (this.dialog.confirm(translation)) {
       this.uiState.startAction();

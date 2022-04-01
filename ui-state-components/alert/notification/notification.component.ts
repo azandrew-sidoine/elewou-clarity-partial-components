@@ -6,21 +6,20 @@ import {
   Output,
   EventEmitter,
   Inject,
-} from "@angular/core";
-import { map, startWith, takeUntil, tap } from "rxjs/operators";
-import { createSubject } from "src/app/lib/core/rxjs/helpers";
-import { isDefined } from "src/app/lib/core/utils";
+} from '@angular/core';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { createSubject } from 'src/app/lib/core/rxjs/helpers';
+import { isDefined } from 'src/app/lib/core/utils';
 import {
   UIState,
   UIStateStatusCode,
-} from "src/app/lib/core/contracts/ui-state";
-import { uiStatusUsingHttpErrorResponse } from "src/app/lib/core/ui-state";
-import { ErrorHandler } from "src/app/lib/core/http/contracts/error-handler";
-import { isServerBadRequest, HTTP_CLIENT } from "src/app/lib/core/http";
-import { doLog } from "src/app/lib/core/rxjs/operators";
+  uiStatusUsingHttpErrorResponse,
+} from 'src/app/lib/core/ui-state';
+import { ErrorHandler } from 'src/app/lib/core/http/contracts/error-handler';
+import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
 
 @Component({
-  selector: "app-ui-notification",
+  selector: 'app-ui-notification',
   template: `
     <ng-container *ngIf="state$ | async as state">
       <drewlabs-action-notification-container *ngIf="!state.hidden">
@@ -116,7 +115,10 @@ import { doLog } from "src/app/lib/core/rxjs/operators";
             [clrAlertClosable]="false"
           >
             <clr-alert-item>
-              <span class="alert-text" [innerHTML]="state?.message"></span>
+              <span
+                class="alert-text"
+                [innerHTML]="state?.message | translate | safeWebContent"
+              ></span>
               <div class="alert-actions">
                 <clr-icon
                   shape="times"
@@ -131,7 +133,10 @@ import { doLog } from "src/app/lib/core/rxjs/operators";
             [clrAlertClosable]="false"
           >
             <clr-alert-item>
-              <span class="alert-text" [innerHTML]="state?.message"></span>
+              <span
+                class="alert-text"
+                [innerHTML]="state?.message | translate | safeWebContent"
+              ></span>
               <div class="alert-actions">
                 <clr-icon
                   shape="times"
@@ -172,7 +177,7 @@ export class AppUINotificationComponent implements OnDestroy {
 
   public state$ = this._state$.asObservable().pipe(
     startWith({
-      message: "",
+      message: '',
       status: undefined,
       hasError: false,
       hidden: true,
@@ -196,7 +201,7 @@ export class AppUINotificationComponent implements OnDestroy {
   onClrAlertClosedChanged(value: boolean): void {
     if (value) {
       this._state$.next({
-        message: "",
+        message: '',
         status: UIStateStatusCode.OK,
         hasError: false,
         hidden: true,
@@ -211,7 +216,7 @@ export class AppUINotificationComponent implements OnDestroy {
         tap((state) => {
           this.endActionEvent.emit({
             status: uiStatusUsingHttpErrorResponse(state),
-            message: "",
+            message: '',
           });
         })
       )
