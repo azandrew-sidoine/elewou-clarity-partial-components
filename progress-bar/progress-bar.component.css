@@ -1,7 +1,7 @@
 /* Progress Bar */
 .loader {
   position: relative;
-  height: 4px;
+  height: 8px;
   display: block;
   width: 100%;
   background-color: rgb(77 95 183);
