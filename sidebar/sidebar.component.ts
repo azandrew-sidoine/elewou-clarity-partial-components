@@ -1,36 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 import {
   RouteLink,
   RoutesMap,
   routeMapToLink,
   RouteLinkCollectionItemInterface,
-} from 'src/app/lib/core/routes';
-import { AuthService } from 'src/app/lib/core/auth/core';
-import { Collection } from 'src/app/lib/core/collections';
-import { TypeUtilHelper } from '../../../core/helpers/type-utils-helper';
-import {
-  Authorizable,
-  IAppUser,
-  userCanAny,
-} from 'src/app/lib/core/auth/contracts/v2';
-import { map } from 'rxjs/operators';
-import { TranslationService } from 'src/app/lib/core/translator';
-import { Dialog } from 'src/app/lib/core/utils';
-import { Router } from '@angular/router';
-import { defaultPath, commonRoutes } from '../partials-configs';
-import { createStateful } from 'src/app/lib/core/rxjs/helpers';
-import { combineLatest } from 'rxjs';
-
-const hasAuthorizations = (user: Authorizable, authorizations: string[]) => {
-  if (authorizations?.length === 0) {
-    return true;
-  }
-  if (user) {
-    return userCanAny(user, authorizations);
-  }
-  return false;
-};
-
+} from "../routes";
+import { map } from "rxjs/operators";
+import { defaultPath, commonRoutes } from "../partials-configs";
+import { BehaviorSubject } from "rxjs";
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -57,54 +34,30 @@ export class SidebarComponent {
   @Input() public moduleName!: string;
   @Input() public applicationName!: string;
 
-  private _routesMap$ = createStateful<RoutesMap[]>([]);
+  private _routesMap$ = new BehaviorSubject<RoutesMap[]>([]);
 
-  state$ = combineLatest([
-    this.auth.state$,
-    this._routesMap$.asObservable(),
-  ]).pipe(
-    map(([state, routeMaps_]) => {
-      // Construct the route mapping here
-      const user = state.user as IAppUser & Authorizable;
-      const routeMaps = routeMaps_
-        .filter((route) => hasAuthorizations(user, route?.authorizations || []))
-        .map((route: RoutesMap) => {
-          if (route?.children) {
-            const children = route?.children?.filter((child) =>
-              hasAuthorizations(user, child?.authorizations || [])
-            );
-            route = { ...route, children };
-          }
-          return route;
-        })
-        .filter((value) => (value ? true : false));
+  state$ = this._routesMap$.asObservable().pipe(
+    map((routeMaps_) => {
+      const routeMaps = routeMaps_;
       const routesIndexes = routeMaps.map((route) => route.key);
-      const routeLinks = new Collection<RouteLink>();
+      const links = new Map<string, RouteLink>();
       routeMapToLink(routeMaps, this.routeDescriptions).forEach(
-        (item: RouteLinkCollectionItemInterface) =>
-          routeLinks.add(item.key, item.value)
+        (item: RouteLinkCollectionItemInterface) => {
+          if (!links.has(item.key)) {
+            links.set(item.key, item.value);
+          }
+        }
       );
-      return { ...user, routeMaps, routeLinks, routesIndexes };
+      return { routeMaps, links, routesIndexes };
     }),
-    map((state) => ({
-      username: state?.userDetails
-        ? state?.userDetails.firstname && state?.userDetails.lastname
-          ? `${state?.userDetails.firstname}, ${state?.userDetails.lastname}`
-          : state?.userDetails.email
-          ? state?.userDetails.email
-          : state?.username
-        : state?.username,
-      routeMaps: state?.routeMaps,
-      routeLinks: state?.routeLinks,
-      routesIndexes: state?.routesIndexes,
-    }))
+    map((state) => state?.links ?? new Map())
   );
 
-  constructor(
-    public auth: AuthService,
-    public readonly typeHelper: TypeUtilHelper,
-    private translator: TranslationService,
-    private dialog: Dialog,
-    private router: Router
-  ) {}
+  isFirstRoute(routes: RoutesMap[], item: RoutesMap): boolean {
+    return routes.indexOf(item) === 0;
+  }
+
+  iteratorToArray(values: Iterable<string>) {
+    return Array.from(values);
+  }
 }

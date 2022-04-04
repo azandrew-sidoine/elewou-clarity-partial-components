@@ -1,29 +1,11 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { numberToAmountFormat } from "src/app/lib/core/utils";
 
 @Pipe({
   name: "formatAmount",
 })
 export class FormatAmountPipe implements PipeTransform {
-  transform(
-    value: any,
-    decimal: any | number = 0,
-    separator: string = " "
-  ): any {
-    return numberToAmountFormat(value, decimal, separator);
-  }
-}
-
-@Pipe({
-  name: "amountFormatter",
-})
-export class AmountFormaterPipe implements PipeTransform {
-  transform(
-    value: any,
-    decimal: any | number = 0,
-    separator: string = " "
-  ): any {
-    return numberToAmountFormat(value, decimal, separator);
+  transform(value: any, locale: string = "fr-FR", currency?: string): any {
+    return Intl.NumberFormat(locale, { currency }).format(value);
   }
 }
 

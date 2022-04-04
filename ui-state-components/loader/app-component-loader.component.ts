@@ -1,7 +1,6 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { mergeMap, filter, map } from "rxjs/operators";
-import { AuthService } from "src/app/lib/core/auth/core";
-import { doLog } from "src/app/lib/core/rxjs/operators";
+import { Component, Input } from "@angular/core";
+import { interval } from "rxjs";
+import { map, take } from "rxjs/operators";
 
 @Component({
   selector: "app-components-loading",
@@ -26,15 +25,9 @@ import { doLog } from "src/app/lib/core/rxjs/operators";
 export class AppComponentsLoadingComponent {
   // tslint:disable-next-line: no-inferrable-types
   @Input() showUIElements: boolean = true;
-  @Output() isAuthenticated: EventEmitter<boolean> = new EventEmitter();
 
-  loadingCompleted$ = this.auth.state$.pipe(
-    doLog('AppComponentsLoadingComponent Auth state: '),
-    map((state) => {
-      this.isAuthenticated.emit(!state.authenticating && state.isLoggedIn);
-      return true;
-    })
+  loadingCompleted$ = interval(500).pipe(
+    take(1),
+    map(() => true)
   );
-
-  constructor(private auth: AuthService) {}
 }

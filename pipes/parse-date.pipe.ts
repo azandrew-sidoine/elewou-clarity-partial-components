@@ -1,13 +1,12 @@
-import { Inject, Optional, Pipe, PipeTransform } from "@angular/core";
-import { NAVIGATOR } from "src/app/lib/core/utils/ng/common";
-import { isDefined, JSDate, MonthProvider, TimeAgo } from "../../../core/utils";
+import { Pipe, PipeTransform } from "@angular/core";
+import { GetTimeAgo, JSDate, ParseMonth } from "@iazlabs/js-datetime";
 
 @Pipe({
   name: "parseDate",
 })
 export class ParseDatePipe implements PipeTransform {
   transform(value: any, args?: any): any {
-    return !isDefined(value)
+    return typeof value === "undefined" || value === null
       ? ""
       : JSDate.isDate(value)
       ? JSDate.format(value, args ? args : "DD/MM/YYYY")
@@ -20,7 +19,7 @@ export class ParseDatePipe implements PipeTransform {
 })
 export class DateTimePipe implements PipeTransform {
   transform(value: any, args?: any): any {
-    return !isDefined(value)
+    return typeof value === "undefined" || value === null
       ? ""
       : JSDate.isDate(value)
       ? JSDate.format(value, args ? args : "lll")
@@ -32,14 +31,12 @@ export class DateTimePipe implements PipeTransform {
   name: "timeago",
 })
 export class TimeAgoPipe implements PipeTransform {
-  // Instance initializer
-  constructor(@Inject(NAVIGATOR) @Optional() private navigator?: Navigator) {}
-
+  // Transformation logic of the pipe object
   transform(value: any, locale: string = "fr-FR"): string {
-    return !isDefined(value)
+    return typeof value === "undefined" || value === null
       ? ""
       : JSDate.isDate(value)
-      ? new TimeAgo().format(JSDate.create(value), locale ?? this.navigator?.language)
+      ? GetTimeAgo()(JSDate.create(value), locale ?? "fr-FR")
       : value;
   }
 }
@@ -49,6 +46,8 @@ export class TimeAgoPipe implements PipeTransform {
 })
 export class ParseMonthPipe implements PipeTransform {
   transform(value: any): any {
-    return !isDefined(value) ? "" : MonthProvider.parseMonth(value);
+    return typeof value === "undefined" || value === null
+      ? ""
+      : ParseMonth(value);
   }
 }

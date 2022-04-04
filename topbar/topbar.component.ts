@@ -1,19 +1,19 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   RouteLink,
   RoutesMap,
   routeMapToLink,
   RouteLinkCollectionItemInterface,
-} from 'src/app/lib/core/routes';
-import { AuthPathConfig, AuthService } from 'src/app/lib/core/auth/core';
-import { Router } from '@angular/router';
-import { TranslationService } from 'src/app/lib/core/translator';
+} from '../routes';
 import { defaultPath, commonRoutes } from '../partials-configs';
-import { Collection } from 'src/app/lib/core/collections';
-import { Dialog, isDefined } from 'src/app/lib/core/utils';
-import { IAppUser } from '../../../core/auth/contracts/v2';
+import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UIStateProvider, UI_STATE_PROVIDER } from 'src/app/lib/core/ui-state';
+import { TranslateService } from '@ngx-translate/core';
+
+interface TopBarUserDetails {
+  username: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-top-bar',
@@ -34,84 +34,53 @@ import { UIStateProvider, UI_STATE_PROVIDER } from 'src/app/lib/core/ui-state';
   ],
 })
 export class AppTopBarComponent implements OnInit {
-  // public elewouLogo = '/assets/images/logo-elewou-main.png';
-  public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
-  public elewouIcon = '/assets/images/icon-elewou.png';
-
-  public navigationRoutes: Collection<RouteLink>;
+  // Navigation Routes
+  public links = new Map<string, RouteLink>();
   public routesIndexes!: string[];
   public dashboardRoute = `/${defaultPath}`;
   public profileRoute = `/${defaultPath}/${commonRoutes.settings}`;
 
+  // Component inputs
   @Input() public routesMap!: RoutesMap[];
-  @Input() routeDescriptions!: { [index: string]: string };
+  @Input() public routeDescriptions!: { [index: string]: string };
   @Input() public moduleName!: string;
   @Input() public applicationName!: string;
   @Input() public companyName!: string;
+  @Input() public user!: TopBarUserDetails;
+  @Input() public isGuest: boolean = false;
+  @Input() public performingAction = false;
 
-  state$ = this.auth.state$.pipe(
-    map((state) => state.user as IAppUser),
-    map((state) => ({
-      username: state?.userDetails
-        ? state?.userDetails?.firstname && state?.userDetails?.lastname
-          ? `${state?.userDetails?.firstname}, ${state?.userDetails?.lastname}`
-          : state?.userDetails?.email
-          ? state.userDetails.email
-          : state?.username
-        : state?.username,
-      isGuess: !isDefined(state),
+  @Output() logoutEvent = new EventEmitter<string>();
+
+  state$ = combineLatest([this.translator.get('promptLogout')]).pipe(
+    map(([translation]) => ({
+      logoutMessage: translation,
     }))
   );
 
-  constructor(
-    @Inject(UI_STATE_PROVIDER) private uiState: UIStateProvider,
-    private auth: AuthService,
-    private translator: TranslationService,
-    private dialog: Dialog,
-    private router: Router
-  ) {
-    this.navigationRoutes = new Collection();
-  }
+  constructor(private translator: TranslateService) {}
 
   ngOnInit(): void {
     this.routesIndexes = this.routesMap.map((route) => route.key);
     routeMapToLink(this.routesMap, this.routeDescriptions).forEach(
-      (item: RouteLinkCollectionItemInterface) =>
-        this.navigationRoutes.add(item.key, item.value)
+      (item: RouteLinkCollectionItemInterface) => {
+        if (!this.links.has(item.key)) {
+          this.links.set(item.key, item.value);
+        }
+      }
     );
-  }
-
-  /**
-   * @description Checks if a given value is null or undefined
-   * @param value [[value]]
-   */
-  public isDefined(value: any): boolean {
-    return isDefined(value);
   }
 
   /**
    * @description Get [[RouteLink]] instance from the collection of RouteLink
    * @param key [[string]]
    */
-  public getRouteLinkFromMap(key: string): RouteLink {
-    return this.navigationRoutes.get(key);
+  public getRouteLinkFromMap(key: string): RouteLink | undefined {
+    return this.links.get(key);
   }
 
-  public redirectToLogin(): void {
-    this.router.navigate([AuthPathConfig.LOGIN_PATH], {
-      replaceUrl: true,
-    });
-    // this.uiState.endAction();
-  }
-
-  async actionLogout(event: Event): Promise<void> {
+  async actionLogout(event: Event, message: string) {
     event.preventDefault();
-    const translation = await this.translator
-      .translate('promptLogout')
-      .toPromise();
-    if (this.dialog.confirm(translation)) {
-      this.uiState.startAction();
-      await this.auth.logout().toPromise();
-    }
+    this.logoutEvent.emit(message);
   }
 }

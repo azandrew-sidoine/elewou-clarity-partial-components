@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable, InjectionToken } from "@angular/core";
 import { isString } from "lodash";
+import { lastValueFrom } from "rxjs";
 import { map } from "rxjs/operators";
-import { doLog } from "src/app/lib/core/rxjs/operators";
 import {
   SlideContentBuilder,
   SlideContentDataLoader,
@@ -30,15 +30,14 @@ export class SlideContentHttpLoader
   ) {}
 
   async load(): Promise<boolean> {
-    return await this.client
-      .get(this._path)
-      .pipe(
+    return lastValueFrom(
+      this.client.get(this._path).pipe(
         map((content) => {
           this._contents = content as SlidesContents;
           return true;
         })
       )
-      .toPromise();
+    );
   }
   build(data: string | SlideData): string {
     return `<img class="slide-img" src="${

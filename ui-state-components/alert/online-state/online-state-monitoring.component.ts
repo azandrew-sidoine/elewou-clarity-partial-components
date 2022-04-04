@@ -4,8 +4,7 @@ import {
   OnlineStateMonitoring,
 } from "./online-state-monitoring.service";
 import { first, map, tap } from "rxjs/operators";
-import { combineLatest, interval } from "rxjs";
-import { createStateful } from "src/app/lib/core/rxjs/helpers";
+import { BehaviorSubject, combineLatest, interval } from "rxjs";
 
 @Component({
   selector: "app-online-state-monitoring",
@@ -18,7 +17,7 @@ export class OnlineStateMonitoringComponent implements OnInit {
     "Vous semblez être déconnecté. Tentative de reconnection en cours...";
   @Input() onlineText: string = "Votre connection est rétablie...";
   // #endregion
-  _showAlertView$ = createStateful(false);
+  _showAlertView$ = new BehaviorSubject(false);
   showAlertView$ = this._showAlertView$.asObservable();
 
   // TODO : Takes computing of the online status algorithm to another observable

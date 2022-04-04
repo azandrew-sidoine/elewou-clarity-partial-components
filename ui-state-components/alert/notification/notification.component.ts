@@ -1,22 +1,22 @@
-import {
-  Component,
-  Input,
-  ChangeDetectionStrategy,
-  OnDestroy,
-  Output,
-  EventEmitter,
-  Inject,
-} from '@angular/core';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
-import { createSubject } from 'src/app/lib/core/rxjs/helpers';
-import { isDefined } from 'src/app/lib/core/utils';
-import {
-  UIState,
-  UIStateStatusCode,
-  uiStatusUsingHttpErrorResponse,
-} from 'src/app/lib/core/ui-state';
-import { ErrorHandler } from 'src/app/lib/core/http/contracts/error-handler';
-import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
+import { map, startWith } from "rxjs/operators";
+import { Subject } from "rxjs";
+
+type PropsType = {
+  message: string;
+  status: number;
+  hasError: boolean;
+  hidden: boolean;
+};
+
+enum StatusCode {
+  UNAUTHORIZED = 401,
+  AUTHENTICATED = 202 || 200,
+  UNAUTHENTICATED = 403,
+  BAD = 422 || 400,
+  OK = 200 || 201,
+  ERROR = 500,
+}
 
 @Component({
   selector: 'app-ui-notification',
@@ -48,7 +48,7 @@ import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
           </clr-alert>
           <!-- Case bad request input authentication -->
           <clr-alert
-            *ngSwitchCase="uiStateResultCode.BAD_REQUEST"
+            *ngSwitchCase="uiStateResultCode.BAD"
             [clrAlertType]="'warning'"
             [clrAlertClosable]="false"
           >
@@ -108,9 +108,8 @@ import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
             </clr-alert-item>
           </clr-alert>
 
-          <!-- Resource request completed successfully -->
           <clr-alert
-            *ngSwitchCase="uiStateResultCode.STATUS_OK"
+            *ngSwitchCase="uiStateResultCode.OK"
             [clrAlertType]="'success'"
             [clrAlertClosable]="false"
           >
@@ -128,7 +127,7 @@ import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
             </clr-alert-item>
           </clr-alert>
           <clr-alert
-            *ngSwitchCase="uiStateResultCode.STATUS_CREATED"
+            *ngSwitchCase="uiStateResultCode.OK"
             [clrAlertType]="'success'"
             [clrAlertClosable]="false"
           >
@@ -150,32 +149,22 @@ import { isServerBadRequest, HTTP_CLIENT } from 'src/app/lib/core/http';
       </drewlabs-action-notification-container>
     </ng-container>
     <!-- UI NOTIFCATION COMPONENT-->
-    <app-online-state-monitoring></app-online-state-monitoring>
+    <ng-content></ng-content>
     <!-- -->
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppUINotificationComponent implements OnDestroy {
-  @Input() uiStateResultCode = UIStateStatusCode;
-  private _state$ = createSubject<
-    Partial<{
-      message: string;
-      status: number;
-      hasError: boolean;
-      hidden: boolean;
-    }>
-  >();
-  @Input() set uiState(state: UIState) {
-    this._state$.next({
-      message: state.uiMessage,
-      status: state.status,
-      hasError: state.hasError,
-      hidden: state.performingAction || !isDefined(state.status),
-    });
+export class AppUINotificationComponent {
+  // Component Inputs
+  @Input() uiStateResultCode = StatusCode;
+  private _state$ = new Subject<Partial<PropsType>>();
+  @Input() set props(state: Partial<PropsType>) {
+    this._state$.next(state);
   }
 
-  public state$ = this._state$.asObservable().pipe(
+  // Component Properties
+  state$ = this._state$.asObservable().pipe(
     startWith({
       message: '',
       status: undefined,
@@ -184,44 +173,21 @@ export class AppUINotificationComponent implements OnDestroy {
     }),
     map((state) => ({
       ...state,
-      status: isServerBadRequest(state.status || UIStateStatusCode.OK)
-        ? UIStateStatusCode.BAD
-        : state?.status,
+      status:
+        500 === (state.status || StatusCode.OK)
+          ? StatusCode.BAD
+          : state?.status,
     }))
   );
-
-  @Output() endActionEvent = new EventEmitter<{
-    status?: number;
-    message?: string;
-  }>();
-
-  // tslint:disable-next-line: variable-name
-  private _destroy$ = createSubject();
 
   onClrAlertClosedChanged(value: boolean): void {
     if (value) {
       this._state$.next({
-        message: '',
-        status: UIStateStatusCode.OK,
+        message: "",
+        status: StatusCode.OK,
         hasError: false,
         hidden: true,
       });
     }
   }
-
-  constructor(@Inject(HTTP_CLIENT) errorHandler: ErrorHandler) {
-    errorHandler.errorState$
-      .pipe(
-        takeUntil(this._destroy$),
-        tap((state) => {
-          this.endActionEvent.emit({
-            status: uiStatusUsingHttpErrorResponse(state),
-            message: '',
-          });
-        })
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy = () => this._destroy$.next({});
 }

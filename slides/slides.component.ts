@@ -1,8 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit, OnDestroy, Inject, Input } from "@angular/core";
-import { interval } from "rxjs";
+import { interval, Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
-import { createSubject } from "src/app/lib/core/rxjs/helpers";
 import { createSlide } from "./helpers";
 import { Slide } from "./models/slide";
 import {
@@ -49,7 +48,7 @@ import {
   ],
 })
 export class SlidesComponent implements OnInit, OnDestroy {
-  private _destroy$ = createSubject();
+  private _destroy$ = new Subject<void>();
   @Input() timer = 1000;
   @Input() slides: Slide[] = [];
   @Input() current: number = 0;

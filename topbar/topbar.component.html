@@ -3,15 +3,25 @@
     <span class="module_name title">{{ moduleName }}</span>
     <span class="module_name title">{{ companyName }}</span>
   </div>
-  <div class="header-actions hide-for-print" *ngIf="state$ | async as state">
-    <div class="user-state" *ngIf="!state?.isGuess">
-      <span class="top-hint">Connecté en tant que : </span>
-      <span class="user-name connected"> {{ state?.username }}</span>
-    </div>
-    <div class="user-actions">
-      <a (click)="actionLogout($event)" class="btn lik-btn primary-btn">
-        <clr-icon shape="logout"></clr-icon>
-      </a>
-    </div>
-  </div>
+  <ng-container *ngIf="state$ | async as vm">
+    <ng-container *ngIf="!isGuest && user">
+      <div class="header-actions hide-for-print">
+        <div class="user-state">
+          <span class="top-hint">Connecté en tant que :</span>
+          <span class="user-name connected">
+            {{ user?.username }}
+          </span>
+        </div>
+        <div class="user-actions">
+          <button
+            [disabled]="performingAction"
+            (click)="actionLogout($event, vm?.logoutMessage)"
+            class="btn lik-btn primary-btn"
+          >
+            <clr-icon shape="logout"></clr-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
 </clr-header>
