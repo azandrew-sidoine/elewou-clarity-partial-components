@@ -1,6 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
-import { map, startWith } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { map, startWith, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { doLog } from 'src/app/lib/core/rxjs/operators';
 
 type PropsType = {
   message: string;
@@ -9,13 +10,13 @@ type PropsType = {
   hidden: boolean;
 };
 
-enum StatusCode {
-  UNAUTHORIZED = 401,
-  AUTHENTICATED = 202 || 200,
-  UNAUTHENTICATED = 403,
-  BAD = 422 || 400,
-  OK = 200 || 201,
-  ERROR = 500,
+class StatusCode {
+  static readonly UNAUTHORIZED = 401;
+  static readonly AUTHENTICATED = 202 || 200;
+  static readonly UNAUTHENTICATED = 403;
+  static readonly BAD = 422 || 400;
+  static readonly OK = 200 || 201;
+  static readonly ERROR = 500;
 }
 
 @Component({
@@ -171,19 +172,22 @@ export class AppUINotificationComponent {
       hasError: false,
       hidden: true,
     }),
-    map((state) => ({
-      ...state,
-      status:
-        500 === (state.status || StatusCode.OK)
-          ? StatusCode.BAD
-          : state?.status,
-    }))
+    map(
+      (state) => ({
+        ...state,
+        status:
+          500 === (state.status || StatusCode.OK)
+            ? StatusCode.BAD
+            : state?.status,
+      }),
+      doLog()
+    )
   );
 
   onClrAlertClosedChanged(value: boolean): void {
     if (value) {
       this._state$.next({
-        message: "",
+        message: '',
         status: StatusCode.OK,
         hasError: false,
         hidden: true,
