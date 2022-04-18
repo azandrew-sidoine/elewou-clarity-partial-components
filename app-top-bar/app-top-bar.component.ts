@@ -37,7 +37,7 @@ export class AppTopBarComponent extends AbstractAlertableComponent implements On
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes: string[];
   public dashboardRoute = `/${defaultPath}`;
-  public profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
+  @Input() public profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
 
   @Input() public routesMap: RoutesMap[];
   @Input() routeDescriptions: { [index: string]: string };
