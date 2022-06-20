@@ -9,11 +9,9 @@ export const routeDefinitions = {
   controlStatsRoute: 'control/stats', // Statistiques des contrôle
 
   // Gestion des droits et Beneficiaires
-  rightsListRoute: 'rights/list',
   excelRightsListRoute: 'excel_rights/list',
   recipientsRoute: 'rights/recipients',
   recipientsActiveRoute: 'rights/reciepients',
-  recipientsInactiveRoute: 'rights/recipients/inactive',
 
   // Réglages de contrôles
   settingsRoute: 'settings',
