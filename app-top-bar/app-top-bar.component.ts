@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RouteLink, RoutesMap, builLinkFromRoutesMap, IRouteLinkCollectionItem } from 'src/app/lib/core/routes';
+import {
+  RouteLink,
+  RoutesMap,
+  builLinkFromRoutesMap,
+  IRouteLinkCollectionItem,
+} from 'src/app/lib/core/routes';
 import { AuthPathConfig, AuthService } from 'src/app/lib/core/auth/core';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/lib/core/translator';
@@ -19,17 +24,20 @@ import { map } from 'rxjs/operators';
       .title {
         padding: 0 16px;
       }
-      .header .branding, header .branding {
+      .header .branding,
+      header .branding {
         padding: 0 0 0 1rem;
       }
-      .app-logo{
+      .app-logo {
         width: 20%;
       }
-    `
-  ]
+    `,
+  ],
 })
-export class AppTopBarComponent extends AbstractAlertableComponent implements OnInit {
-
+export class AppTopBarComponent
+  extends AbstractAlertableComponent
+  implements OnInit
+{
   // public elewouLogo = '/assets/images/logo-elewou-main.png';
   public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
   public elewouIcon = '/assets/images/icon-elewou.png';
@@ -47,12 +55,21 @@ export class AppTopBarComponent extends AbstractAlertableComponent implements On
   public modulesBackendRoute = backendRoutePaths.modules;
 
   state$ = this.auth.state$.pipe(
-    map(state => state.user as IAppUser),
-    map(state => ({
-      username: state.userDetails ?
-        (state.userDetails.firstname && state.userDetails.lastname ? `${state.userDetails.firstname}, ${state.userDetails.lastname}` :
-          (state.userDetails.email ? state.userDetails.email : state.username)) : state.username
-    }))
+    map((state) => state.user as IAppUser),
+    map((state) => {
+      if (state) {
+        return {
+          username: state.userDetails
+            ? state.userDetails.firstname && state.userDetails.lastname
+              ? `${state.userDetails.firstname}, ${state.userDetails.lastname}`
+              : state.userDetails.email
+              ? state.userDetails.email
+              : state.username
+            : state.username,
+        };
+      }
+      return ``;
+    })
   );
 
   constructor(
@@ -92,14 +109,16 @@ export class AppTopBarComponent extends AbstractAlertableComponent implements On
 
   public redirectToLogin(): void {
     this.router.navigate([AuthPathConfig.LOGIN_PATH], {
-      replaceUrl: true
+      replaceUrl: true,
     });
     this.appUIStoreManager.completeUIStoreAction();
   }
 
   async actionLogout(event: Event): Promise<void> {
     event.preventDefault();
-    const translation = await this.translator.translate('promptLogout').toPromise();
+    const translation = await this.translator
+      .translate('promptLogout')
+      .toPromise();
     if (this.dialog.confirm(translation)) {
       this.appUIStoreManager.initializeUIStoreAction();
       await this.auth.logout().toPromise();
