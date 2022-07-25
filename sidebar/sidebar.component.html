@@ -1,17 +1,3 @@
-<div class="user-container" *ngIf="state$ | async as state">
-   <img [src]="elewouIcon" alt="User Profile" width="32" height="auto" />
-  <clr-dropdown>
-    <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
-      {{ state?.username }}
-      <clr-icon shape="caret down"></clr-icon>
-    </button>
-    <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-      <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
-      <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
-      <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
-    </clr-dropdown-menu>
-  </clr-dropdown>
-</div>
 <ng-container>
   <ng-container *ngFor="let item of routesMap">
     <clr-vertical-nav-group routerLinkActive="active" *ngIf="typeHelper.isDefined(item?.children)" >

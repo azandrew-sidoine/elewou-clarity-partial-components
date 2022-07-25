@@ -27,16 +27,16 @@
     <span class="module_name title"> {{ moduleName }}</span>
   </div>
   <div class="header-nav hide-for-print">
+    <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">Tableau de bord</a>
   </div>
   <!-- | async as state -->
   <div class="header-actions hide-for-print" *ngIf="state$ ">
     <clr-dropdown *ngIf="!state?.isGuess">
       <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
-        {{ state?.username }}
+      Actions {{ state?.username }}
         <clr-icon shape="caret down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <!-- <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a> -->
         <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
         <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
       </clr-dropdown-menu>
