@@ -65,7 +65,7 @@ export class AppTopBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routesIndexes = this.routesMap.map((route) => route.key);
+    // this.routesIndexes = this.routesMap.map((route) => route.key);
     builLinkFromRoutesMap(this.routesMap, this.routeDescriptions).forEach(
       (item: IRouteLinkCollectionItem) =>
         this.navigationRoutes.add(item.key, item.value)

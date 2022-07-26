@@ -24,10 +24,9 @@
     <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">
       <span class="title app-logo">{{ applicationName }}</span>
     </a>
-    <span class="module_name title"> {{ moduleName }}</span>
   </div>
   <div class="header-nav hide-for-print">
-    <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">Tableau de bord</a>
+    <a class="nav-link" [routerLink]="dashboardRoute" rel="noopener" routerLinkActive="active">{{ moduleName }}</a>
   </div>
   <!-- | async as state -->
   <div class="header-actions hide-for-print" *ngIf="state$ ">
