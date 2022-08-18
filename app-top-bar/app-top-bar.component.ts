@@ -30,8 +30,8 @@ import { AppUIStateProvider } from 'src/app/lib/core/ui-state';
 export class AppTopBarComponent implements OnInit {
 
 
-  // public elewouLogo = '/assets/images/logo-elewou-main.png';
-  public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
+  public elewouLogo = '/assets/images/logo-elewou-main.png';
+  // public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
   public elewouIcon = '/assets/images/icon-elewou.png';
 
   public navigationRoutes: Collection<RouteLink>;

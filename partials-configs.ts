@@ -8,7 +8,8 @@ export const partialConfigs = {
       dashboardRoute: 'dashboard',
       dashboardHomeRoute: 'dashboard/home',
       homeRoute: 'home',
-      settings: 'settings'
+      settings: 'settings',
+      loginRoute: 'login'
     },
   }
 };
