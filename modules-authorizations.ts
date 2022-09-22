@@ -1,3 +1,4 @@
+import { appRhAccessControlList } from './access-rh-list';
 import { appAccessControlList } from './access-control-list';
 
 export const adminAuthorizations = [
@@ -18,4 +19,10 @@ export const adminAuthorizations = [
   appAccessControlList.update_organisations,
   appAccessControlList.delete_organisations,
   appAccessControlList.list_organisations,
+];
+
+export const employeAuthorizations = [
+  appRhAccessControlList.create_employee,
+  appRhAccessControlList.inactif_employee,
+  appRhAccessControlList.pending_employee,
 ];
