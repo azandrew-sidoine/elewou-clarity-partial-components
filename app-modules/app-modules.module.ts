@@ -12,7 +12,7 @@ import { AppModulesComponent } from './app-modules.component';
   ],
   imports: [
     CommonModule,
-    ClarityModule,
+    ClarityModule
   ],
   providers: []
 })

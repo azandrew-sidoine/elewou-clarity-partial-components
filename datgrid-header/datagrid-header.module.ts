@@ -6,7 +6,7 @@ import { DatgridHeaderComponent } from './datgrid-header.component';
 @NgModule({
   imports: [
     CommonModule,
-    ClarityModule,
+    ClarityModule
   ],
   declarations: [ DatgridHeaderComponent ],
   exports: [ DatgridHeaderComponent ]

@@ -1,27 +1,13 @@
-<div class="user-container" *ngIf="state$ | async as state">
-   <img [src]="elewouIcon" alt="User Profile" width="32" height="auto" />
-  <clr-dropdown>
-    <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
-      {{ state?.user }}
-      <clr-icon shape="caret down"></clr-icon>
-    </button>
-    <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-      <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
-      <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
-      <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
-    </clr-dropdown-menu>
-  </clr-dropdown>
-</div>
 <ng-container>
   <ng-container *ngFor="let item of routesMap">
     <clr-vertical-nav-group routerLinkActive="active" *ngIf="typeHelper.isDefined(item?.children)" >
-      <clr-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon" [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon"
-        clrVerticalNavIcon></clr-icon>
+      <cds-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon" [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon"
+        clrVerticalNavIcon></cds-icon>
       {{ getRouteLinkFromMap(item.key)?.routeDescription }}
       <clr-vertical-nav-group-children>
         <ng-container *ngFor="let child of getRouteLinkFromMap(item?.key)?.children">
           <a clrVerticalNavLink [routerLink]="child?.routePath" routerLinkActive="active">
-            <clr-icon *ngIf="child?.routeIcon" [attr.shape]="child?.routeIcon" clrVerticalNavIcon></clr-icon>
+            <cds-icon *ngIf="child?.routeIcon" [attr.shape]="child?.routeIcon" clrVerticalNavIcon></cds-icon>
             {{ child.routeDescription }}
           </a>
         </ng-container>
@@ -30,8 +16,8 @@
     <ng-container *ngIf="!typeHelper.isDefined(item?.children)">
       <a clrVerticalNavLink routerLinkActive="active" [routerLink]="getRouteLinkFromMap(item.key)?.routePath"
         >
-        <clr-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon"
-          [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon" clrVerticalNavIcon></clr-icon>
+        <cds-icon *ngIf="getRouteLinkFromMap(item.key)?.routeIcon"
+          [attr.shape]="getRouteLinkFromMap(item.key)?.routeIcon" clrVerticalNavIcon></cds-icon>
         {{ getRouteLinkFromMap(item.key)?.routeDescription }}
       </a>
     </ng-container>

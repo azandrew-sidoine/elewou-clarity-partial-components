@@ -1,3 +1,4 @@
+import { TitleComponent } from './title/title.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -23,14 +24,16 @@ import { DetailedTablePreviewComponent } from './detailed-table-preview/detailed
     AppModuleModule,
     DatagridHeaderModule,
     DetailedTablePreviewComponent,
+    TitleComponent
   ],
   declarations: [
     AppTopBarComponent,
     SidebarComponent,
-    DetailedTablePreviewComponent
+    DetailedTablePreviewComponent,
+    TitleComponent
   ],
   providers: []
 })
 export class PartialsModule {
-  
+
 }

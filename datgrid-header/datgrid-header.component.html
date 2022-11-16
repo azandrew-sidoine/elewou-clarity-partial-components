@@ -1,9 +1,9 @@
 <div class="btn-group">
   <button type="button" [disabled]="createButtonDisabled" class="btn btn-sm btn-outline" (click)="createEvent.emit({})">
-    <clr-icon shape="plus-circle"></clr-icon> Ajouter
+    <cds-icon shape="plus-circle"></cds-icon> Ajouter
   </button>
   <button type="button" [disabled]="refreshButtonDisabled" [class]="buttonClass" (click)="refreshEvent.emit({})">
-    <clr-icon shape="refresh"></clr-icon> Actualiser
+    <cds-icon shape="refresh"></cds-icon> Actualiser
   </button>
   <!-- Other datagrid header components -->
   <ng-content></ng-content>
@@ -11,7 +11,7 @@
   <clr-dropdown *ngIf="showExportDropdown">
     <button type="button" [disabled]="excelDropDownDisabled" [class]="buttonClass" clrDropdownTrigger>
       Exporter
-      <clr-icon shape="caret down"></clr-icon>
+      <cds-icon shape="caret down"></cds-icon>
     </button>
     <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
       <button type="button" (click)="exportToExcelEvent.emit({})" clrDropdownItem>Exporter les
