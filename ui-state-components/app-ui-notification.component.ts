@@ -21,7 +21,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="(state?.message || 'serverRequestFailed') | translate | safeWebContent"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>
@@ -30,7 +30,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="(state?.message ? state?.message : 'invalidRequestParams') | translate | safeWebContent"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>
@@ -39,7 +39,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="'login.authenticationFailed' | translate"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>
@@ -48,7 +48,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="'login.successful' | translate"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>
@@ -58,7 +58,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="state?.message"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>
@@ -66,7 +66,7 @@ import { doLog } from 'src/app/lib/core/rxjs/operators';
           <clr-alert-item>
               <span class="alert-text" [innerHTML]="state?.message"></span>
               <div class="alert-actions">
-                  <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
+                  <clr-icon shape="times" (click)="onClrAlertClosedChanged(true)"></clr-icon>
               </div>
           </clr-alert-item>
         </clr-alert>

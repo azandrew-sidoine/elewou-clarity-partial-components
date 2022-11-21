@@ -12,7 +12,7 @@
     <clr-dropdown *ngIf="!state?.isGuess">
       <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
         {{ state?.username }}
-        <cds-icon shape="caret down"></cds-icon>
+        <clr-icon shape="caret down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
         <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
