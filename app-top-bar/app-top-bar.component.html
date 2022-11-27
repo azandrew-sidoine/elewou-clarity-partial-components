@@ -11,12 +11,13 @@
   <div class="header-actions hide-for-print" *ngIf="state$ ">
     <clr-dropdown *ngIf="!state?.isGuess">
       <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
-        {{ state?.username }}
+        Mon compte
+        <!-- {{ state?.username }} -->
         <clr-icon shape="caret down"></clr-icon>
       </button>
       <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-        <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Mon Profil</a>
-        <a href="..." clrDropdownItem *ngIf="false">Preferences</a>
+        <a [routerLink]="profileRoute" clrDropdownItem *ngIf="true">Profil</a>
+        <a href="..." clrDropdownItem *ngIf="false">Préferences du compte</a>
         <a (click)="actionLogout($event)" clrDropdownItem>Se Déconnecter</a>
       </clr-dropdown-menu>
     </clr-dropdown>
