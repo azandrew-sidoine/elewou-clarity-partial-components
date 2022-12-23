@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { GetTimeAgo, JSDate, ParseMonth } from '@iazlabs/js-datetime';
+import { GetTimeAgo, JSDate, ParseMonth } from '@azlabsjs/js-datetime';
 
 @Pipe({
   name: 'parseDate',

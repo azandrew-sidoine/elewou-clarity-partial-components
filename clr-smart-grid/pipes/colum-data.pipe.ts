@@ -1,16 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
 import {
-  UpperCasePipe,
-  LowerCasePipe,
+  AsyncPipe,
   CurrencyPipe,
   DecimalPipe,
   JsonPipe,
+  LowerCasePipe,
   PercentPipe,
   SlicePipe,
-  AsyncPipe,
+  UpperCasePipe,
 } from '@angular/common';
-import { after, before } from '@iazlabs/strings';
+import { Pipe, PipeTransform } from '@angular/core';
 import { GetTimeAgo, JSDate, ParseMonth } from '@azlabsjs/js-datetime';
+import { after, before } from '@azlabsjs/str';
 
 function substr(value: string, start: number, length?: number) {
   if (typeof value !== 'string') {

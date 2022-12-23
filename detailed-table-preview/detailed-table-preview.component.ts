@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { JSObject } from "@iazlabs/js-object";
+import { JSObject } from "@azlabsjs/js-object";
 
 @Component({
   selector: "app-detailed-table-preview",
