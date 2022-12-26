@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import {
-  RouteLink,
-  RoutesMap,
-  routeMapToLink,
-  RouteLinkCollectionItemInterface,
-} from "../routes";
-import { defaultPath, commonRoutes } from "../partials-configs";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 import { combineLatest } from "rxjs";
 import { map } from "rxjs/operators";
-import { TranslateService } from "@ngx-translate/core";
+import { commonRoutes, defaultPath } from "../partials-configs";
+import {
+  RouteLink,
+  RouteLinkCollectionItemInterface,
+  RoutesMap,
+  routeMapToLink,
+} from "../routes";
 
 interface TopBarUserDetails {
   username: string;

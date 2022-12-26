@@ -1,13 +1,13 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, OnInit, OnDestroy, Inject, Input } from "@angular/core";
-import { interval, Subject } from "rxjs";
+import { Component, Inject, Input, OnDestroy, OnInit } from "@angular/core";
+import { Subject, interval } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 import { createSlide } from "./helpers";
 import { Slide } from "./models/slide";
 import {
+  SLIDE_CONTENT_HANDLER,
   SlideContentBuilder,
   SlideContentDataLoader,
-  SLIDE_CONTENT_HANDLER,
 } from "./slide-content-loader";
 
 @Component({

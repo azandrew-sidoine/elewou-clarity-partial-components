@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NetworkStatus, NetworkState } from './network-state.service';
-import { first, map, tap } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, interval } from 'rxjs';
+import { first, map, tap } from 'rxjs/operators';
+import { NetworkState, NetworkStatus } from './network-state.service';
 
 const defaultMessages = {
   offline:

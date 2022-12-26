@@ -1,50 +1,28 @@
-<clr-vertical-nav
-  [clrVerticalNavCollapsible]="true"
-  class="nav-trigger--bottom"
-  [clr-nav-level]="1"
->
-  <ng-container *ngIf="state$ | async as vm">
-    <ng-container *ngFor="let key of iteratorToArray(vm.keys())">
-      <ng-container *ngIf="(vm.get(key)?.children ?? []).length !== 0">
-        <clr-vertical-nav-group routerLinkActive="active">
-          <clr-icon
-            *ngIf="vm.get(key)?.routeIcon"
-            [attr.shape]="vm.get(key)?.routeIcon"
-            clrVerticalNavIcon
-          ></clr-icon>
-          {{ vm.get(key)?.routeDescription | uppercase }}
-          <clr-vertical-nav-group-children>
-            <ng-container *ngFor="let child of vm.get(key)?.children">
-              <a
-                clrVerticalNavLink
-                [routerLink]="child?.routePath"
-                routerLinkActive="active"
-              >
-                <clr-icon
-                  *ngIf="child?.routeIcon"
-                  [attr.shape]="child?.routeIcon"
-                  clrVerticalNavIcon
-                ></clr-icon>
-                {{ child.routeDescription | uppercase }}
-              </a>
-            </ng-container>
-          </clr-vertical-nav-group-children>
-        </clr-vertical-nav-group>
+<ng-container *ngIf="state$ | async as vm">
+  <clr-vertical-nav [clrVerticalNavCollapsible]="true" class="nav-trigger--bottom">
+      <ng-container *ngFor="let key of iteratorToArray(vm.keys())">
+        <ng-container *ngIf="(vm.get(key)?.children ?? []).length !== 0">
+          <clr-vertical-nav-group routerLinkActive="active">
+            <clr-icon *ngIf="vm.get(key)?.routeIcon" [attr.shape]="vm.get(key)?.routeIcon"
+              clrVerticalNavIcon></clr-icon>
+            {{ vm.get(key)?.routeDescription | uppercase }}
+            <clr-vertical-nav-group-children>
+              <ng-container *ngFor="let child of vm.get(key)?.children">
+                <a clrVerticalNavLink [routerLink]="child?.routePath" routerLinkActive="active">
+                  <clr-icon *ngIf="child?.routeIcon" [attr.shape]="child?.routeIcon" clrVerticalNavIcon></clr-icon>
+                  {{ child.routeDescription | uppercase }}
+                </a>
+              </ng-container>
+            </clr-vertical-nav-group-children>
+          </clr-vertical-nav-group>
+        </ng-container>
+        <ng-container *ngIf="(vm.get(key)?.children ?? []).length === 0">
+          <a clrVerticalNavLink routerLinkActive="active" [routerLink]="vm.get(key)?.routePath">
+            <clr-icon *ngIf="vm.get(key)?.routeIcon" [attr.shape]="vm.get(key)?.routeIcon"
+              clrVerticalNavIcon></clr-icon>
+            {{ vm.get(key)?.routeDescription | uppercase }}
+          </a>
+        </ng-container>
       </ng-container>
-      <ng-container *ngIf="(vm.get(key)?.children ?? []).length === 0">
-        <a
-          clrVerticalNavLink
-          routerLinkActive="active"
-          [routerLink]="vm.get(key)?.routePath"
-        >
-          <clr-icon
-            *ngIf="vm.get(key)?.routeIcon"
-            [attr.shape]="vm.get(key)?.routeIcon"
-            clrVerticalNavIcon
-          ></clr-icon>
-          {{ vm.get(key)?.routeDescription | uppercase }}
-        </a>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-</clr-vertical-nav>
+  </clr-vertical-nav>
+</ng-container>
