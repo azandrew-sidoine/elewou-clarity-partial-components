@@ -4,6 +4,7 @@ export const partialConfigs = {
     commonRoutes: {
       dashboardRoute: 'dashboard',
       dashboardHomeRoute: 'dashboard/home',
+      customerHomeRoute: 'dashboard/customer',
       homeRoute: 'home',
       settings: 'settings'
     },
@@ -11,7 +12,7 @@ export const partialConfigs = {
 };
 
 // Common routes
-export const commonRoutes =  partialConfigs.routes.commonRoutes;
+export const commonRoutes = partialConfigs.routes.commonRoutes;
 
 // Default paths definitions
 export const defaultPath = `/${partialConfigs.routes.commonRoutes.dashboardRoute}`;
