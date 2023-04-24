@@ -7,7 +7,6 @@ import {
 } from 'src/app/lib/core/routes';
 import { AbstractAlertableComponent } from 'src/app/lib/core/helpers/component-interfaces';
 import { AppUIStoreManager } from 'src/app/lib/core/helpers/app-ui-store-manager.service';
-import { AuthPathConfig, AuthService } from 'src/app/lib/core/auth/core';
 import { Collection } from 'src/app/lib/core/collections';
 import { TypeUtilHelper } from '../../../core/helpers/type-utils-helper';
 import {
@@ -45,34 +44,9 @@ export class SidebarComponent
 
   public modulesBackendRoute = backendRoutePaths.modules;
 
-  // state$ = this.auth.state$.pipe(
-  //   map(state => state.user)
-  // );
-  state$ = this.auth.state$.pipe(
-    map((state) => state.user as IAppUser),
-    map((state) => {
-      if (state) {
-        return {
-          username: state.userDetails
-            ? state.userDetails.firstname && state.userDetails.lastname
-              ? `${state.userDetails.firstname}, ${state.userDetails.lastname}`
-              : state.userDetails.email
-              ? state.userDetails.email
-              : state.username
-            : state.username,
-        };
-      }
-      return ``;
-    })
-  );
-
   constructor(
     public appUIStoreManager: AppUIStoreManager,
-    public auth: AuthService,
-    public readonly typeHelper: TypeUtilHelper,
-    private translator: TranslationService,
-    private dialog: Dialog,
-    private router: Router
+    public readonly typeHelper: TypeUtilHelper
   ) {
     super(appUIStoreManager);
     this.navigationRoutes = new Collection();
@@ -100,23 +74,5 @@ export class SidebarComponent
 
   hasAuthorizations(user: Authorizable, authorizations: string[]): boolean {
     return userCanAny(user, authorizations);
-  }
-
-  public redirectToLogin(): void {
-    this.router.navigate([AuthPathConfig.LOGIN_PATH], {
-      replaceUrl: true,
-    });
-    this.appUIStoreManager.completeUIStoreAction();
-  }
-
-  async actionLogout(event: Event): Promise<void> {
-    event.preventDefault();
-    const translation = await this.translator
-      .translate('promptLogout')
-      .toPromise();
-    if (this.dialog.confirm(translation)) {
-      this.appUIStoreManager.initializeUIStoreAction();
-      await this.auth.logout().toPromise();
-    }
   }
 }

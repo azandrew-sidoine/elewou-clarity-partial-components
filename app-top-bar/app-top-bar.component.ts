@@ -1,20 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   RouteLink,
   RoutesMap,
   builLinkFromRoutesMap,
   IRouteLinkCollectionItem,
 } from 'src/app/lib/core/routes';
-import { AuthPathConfig, AuthService } from 'src/app/lib/core/auth/core';
-import { Router } from '@angular/router';
-import { TranslationService } from 'src/app/lib/core/translator';
 import { AbstractAlertableComponent } from 'src/app/lib/core/helpers/component-interfaces';
 import { AppUIStoreManager } from 'src/app/lib/core/helpers/app-ui-store-manager.service';
 import { backendRoutePaths, defaultPath, adminPath } from '../partials-configs';
 import { Collection } from 'src/app/lib/core/collections';
-import { Dialog, isDefined } from 'src/app/lib/core/utils';
-import { IAppUser } from '../../../core/auth/contracts/v2';
-import { map } from 'rxjs/operators';
+import { isDefined } from 'src/app/lib/core/utils';
 
 @Component({
   selector: 'app-app-top-bar',
@@ -45,40 +40,21 @@ export class AppTopBarComponent
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes: string[];
   public dashboardRoute = `/${defaultPath}`;
-  @Input() public profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
+  @Input() profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
 
-  @Input() public routesMap: RoutesMap[];
+  @Input() routesMap: RoutesMap[];
   @Input() routeDescriptions: { [index: string]: string };
-  @Input() public moduleName: string;
-  @Input() public applicationName: string;
+  @Input() moduleName: string;
+  @Input() applicationName: string;
+  @Input() username!: string;
+
+  // #region Component outputs
+  @Output() logout = new EventEmitter<boolean>();
+  // #endregion Component outputs
 
   public modulesBackendRoute = backendRoutePaths.modules;
 
-  state$ = this.auth.state$.pipe(
-    map((state) => state.user as IAppUser),
-    map((state) => {
-      if (state) {
-        return {
-          username: state.userDetails
-            ? state.userDetails.firstname && state.userDetails.lastname
-              ? `${state.userDetails.firstname}, ${state.userDetails.lastname}`
-              : state.userDetails.email
-              ? state.userDetails.email
-              : state.username
-            : state.username,
-        };
-      }
-      return ``;
-    })
-  );
-
-  constructor(
-    public appUIStoreManager: AppUIStoreManager,
-    private auth: AuthService,
-    private translator: TranslationService,
-    private dialog: Dialog,
-    private router: Router
-  ) {
+  constructor(public appUIStoreManager: AppUIStoreManager) {
     super(appUIStoreManager);
     this.navigationRoutes = new Collection();
   }
@@ -107,21 +83,8 @@ export class AppTopBarComponent
     return this.navigationRoutes.get(key);
   }
 
-  public redirectToLogin(): void {
-    this.router.navigate([AuthPathConfig.LOGIN_PATH], {
-      replaceUrl: true,
-    });
-    this.appUIStoreManager.completeUIStoreAction();
-  }
-
   async actionLogout(event: Event): Promise<void> {
-    event.preventDefault();
-    const translation = await this.translator
-      .translate('promptLogout')
-      .toPromise();
-    if (this.dialog.confirm(translation)) {
-      this.appUIStoreManager.initializeUIStoreAction();
-      await this.auth.logout().toPromise();
-    }
+    this.logout.emit(true);
+    event?.preventDefault();
   }
 }
