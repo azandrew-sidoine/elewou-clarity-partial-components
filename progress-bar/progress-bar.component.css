@@ -1,14 +1,15 @@
 /* Progress Bar */
 .loader {
   position: relative;
-  height: 4px;
+  height: 20px;
   display: block;
   width: 100%;
-  background-color: rgb(77 95 183);
+  background-color: rgb(226, 196, 3);
   border-radius: 2px;
   background-clip: padding-box;
   margin: 0.5rem 0 1rem 0;
   overflow: hidden;
+  transition: all 200ms ease-in-out;
 }
 
 .loader-hidden {
@@ -28,12 +29,17 @@
   background-color: inherit;
   top: 0;
   bottom: 0;
-  background-color: #095aa7;
+  background-color: rgba(192, 226, 3, 0.9);
   transition: width .3s linear;
+  text-align: center;
 }
 
 .loader .indeterminate {
-  background-color: #004f9a;
+  background-color: rgba(251, 204, 14, 0.9);
+  text-align: center;
+  padding: 5px;
+  top: 5px;
+  font-size: 13px;
 }
 
 .loader .indeterminate:before {
