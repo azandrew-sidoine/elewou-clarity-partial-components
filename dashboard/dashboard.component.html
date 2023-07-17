@@ -1,0 +1,11 @@
+<clr-main-container class="light-mode">
+    <app-top-bar [routesMap]="routesmaps" [applicationName]="name" [moduleName]="module" [companyName]="company"
+        [routeDescriptions]="definitions">
+    </app-top-bar>
+    <div class="content-container">
+        <ng-content select=".azl-adm-nav"></ng-content>
+        <main class="content-area">
+            <ng-content select=".azl-adm-content"></ng-content>
+        </main>
+    </div>
+</clr-main-container>

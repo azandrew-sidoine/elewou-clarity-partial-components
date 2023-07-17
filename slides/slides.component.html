@@ -1,0 +1,18 @@
+<div class="carousel" (swipeLeft)="previous()" (swipeRight)="next()">
+  <ng-container *ngFor="let slide of slides; let i = index">
+    <img
+      *ngIf="i === current"
+      [src]="slide.src"
+      [alt]="slide.alt || ''"
+      [title]="slide.title || ''"
+      class="slide"
+      [@slideIn]="slideLeft ? 'left' : 'right'"
+    />
+  </ng-container>
+  <button class="control prev" (click)="previous()">
+    <span class="arrow left"></span>
+  </button>
+  <button class="control next" (click)="next()">
+    <span class="arrow right"></span>
+  </button>
+</div>

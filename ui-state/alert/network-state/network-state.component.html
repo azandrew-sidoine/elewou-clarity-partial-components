@@ -1,0 +1,27 @@
+<ng-container *ngIf="state$ | async as vm">
+  <clr-alert
+    [clrAlertType]="'danger'"
+    [clrAlertClosable]="false"
+    [clrAlertAppLevel]="true"
+    *ngIf="!vm?.online"
+  >
+    <clr-alert-item>
+      <span class="alert-text">
+        <span>
+          {{ messages.offline }}
+        </span>
+      </span>
+    </clr-alert-item>
+  </clr-alert>
+  <clr-alert
+    [clrAlertType]="'success'"
+    [clrAlertAppLevel]="true"
+    *ngIf="vm?.online && vm?.stateChanged && !vm?.hidden"
+  >
+    <clr-alert-item>
+      <span class="alert-text">
+        {{ messages.online }}
+      </span>
+    </clr-alert-item>
+  </clr-alert>
+</ng-container>

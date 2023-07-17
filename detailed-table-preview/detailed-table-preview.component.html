@@ -2,9 +2,16 @@
   <tbody>
     <ng-container *ngFor="let key of mappings">
       <tr *ngIf="!hiddenfields.includes(key)">
-        <th class="header"><span> {{ key | translate | uppercase }}</span></th>
-        <td class="left">{{ datefields.includes(headers[key]) ? (getvalue(value, headers[key]) | parseDate) :
-          getvalue(value, headers[key]) }}</td>
+        <th class="header">
+          <span>{{ key | translate | uppercase }}</span>
+        </th>
+        <td class="left">
+          {{
+            datefields.includes(headers[key])
+              ? (getvalue(value, headers[key]) | parseDate)
+              : getvalue(value, headers[key])
+          }}
+        </td>
       </tr>
     </ng-container>
   </tbody>

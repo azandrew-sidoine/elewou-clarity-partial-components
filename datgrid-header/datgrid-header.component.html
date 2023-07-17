@@ -1,20 +1,52 @@
 <div class="btn-group">
-  <button type="button" [disabled]="createButtonDisabled" class="btn btn-sm btn-outline" (click)="createEvent.emit({})">
-    <clr-icon shape="plus-circle"></clr-icon> Ajouter
+  <!--- Create button -->
+  <ng-content select='[button.refresh-button]'></ng-content>
+  <!--\ Create button -->
+  <!--TODO : Remove Create and Refresh Button in the future updates -->
+  <button
+    *ngIf="showCreate"
+    type="button"
+    [disabled]="createButtonDisabled"
+    class="btn btn-sm btn-outline"
+    (click)="createEvent.emit()"
+  >
+    <clr-icon shape="plus-circle"></clr-icon>
+    Ajouter
   </button>
-  <button type="button" [disabled]="refreshButtonDisabled" [class]="buttonClass" (click)="refreshEvent.emit({})">
-    <clr-icon shape="refresh"></clr-icon> Actualiser
+  <!--- Refresh button -->
+  <ng-content select='[button.refresh-button]'></ng-content>
+  <!--\ Refresh button -->
+  <button
+    *ngIf="showRefresh"
+    type="button"
+    [disabled]="refreshButtonDisabled"
+    [class]="buttonClass"
+    (click)="refreshEvent.emit()"
+  >
+    <clr-icon shape="refresh"></clr-icon>
+    Actualiser
   </button>
   <!-- Other datagrid header components -->
   <ng-content></ng-content>
   <!-- Ends Other datagrid header components -->
   <clr-dropdown *ngIf="showExportDropdown">
-    <button type="button" [disabled]="excelDropDownDisabled" [class]="buttonClass" clrDropdownTrigger>
+    <button
+      type="button"
+      [disabled]="excelDropDownDisabled"
+      [class]="buttonClass"
+      clrDropdownTrigger
+    >
       Exporter
       <clr-icon shape="caret down"></clr-icon>
     </button>
     <clr-dropdown-menu clrPosition="bottom-left" *clrIfOpen>
-      <button type="button" (click)="exportToExcelEvent.emit({})" clrDropdownItem>Exporter les
-        données</button>
+      <button
+        type="button"
+        (click)="exportToExcelEvent.emit({})"
+        clrDropdownItem
+      >
+        Exporter les données
+      </button>
     </clr-dropdown-menu>
   </clr-dropdown>
+</div>
