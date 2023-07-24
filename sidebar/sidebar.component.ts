@@ -9,15 +9,6 @@ import { AbstractAlertableComponent } from 'src/app/lib/core/helpers/component-i
 import { AppUIStoreManager } from 'src/app/lib/core/helpers/app-ui-store-manager.service';
 import { Collection } from 'src/app/lib/core/collections';
 import { TypeUtilHelper } from '../../../core/helpers/type-utils-helper';
-import {
-  Authorizable,
-  IAppUser,
-  userCanAny,
-} from 'src/app/lib/core/auth/contracts/v2';
-import { map } from 'rxjs/operators';
-import { TranslationService } from 'src/app/lib/core/translator';
-import { Dialog } from 'src/app/lib/core/utils';
-import { Router } from '@angular/router';
 import { adminPath, backendRoutePaths, defaultPath } from '../partials-configs';
 
 @Component({
@@ -70,9 +61,5 @@ export class SidebarComponent
    */
   public getRouteLinkFromMap(key: string): RouteLink {
     return this.navigationRoutes.get(key);
-  }
-
-  hasAuthorizations(user: Authorizable, authorizations: string[]): boolean {
-    return userCanAny(user, authorizations);
   }
 }

@@ -1,19 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import {
   RouteLink,
   RoutesMap,
   builLinkFromRoutesMap,
   IRouteLinkCollectionItem,
-} from 'src/app/lib/core/routes';
-import { AbstractAlertableComponent } from 'src/app/lib/core/helpers/component-interfaces';
-import { AppUIStoreManager } from 'src/app/lib/core/helpers/app-ui-store-manager.service';
-import { backendRoutePaths, defaultPath, adminPath } from '../partials-configs';
-import { Collection } from 'src/app/lib/core/collections';
-import { isDefined } from 'src/app/lib/core/utils';
+} from "src/app/lib/core/routes";
+import { AbstractAlertableComponent } from "src/app/lib/core/helpers/component-interfaces";
+import { AppUIStoreManager } from "src/app/lib/core/helpers/app-ui-store-manager.service";
+import { backendRoutePaths, defaultPath, adminPath } from "../partials-configs";
+import { Collection } from "src/app/lib/core/collections";
+import { isDefined } from "src/app/lib/core/utils";
 
 @Component({
-  selector: 'app-app-top-bar',
-  templateUrl: './app-top-bar.component.html',
+  selector: "app-app-top-bar",
+  templateUrl: "./app-top-bar.component.html",
   styles: [
     `
       .title {
@@ -34,8 +34,8 @@ export class AppTopBarComponent
   implements OnInit
 {
   // public elewouLogo = '/assets/images/logo-elewou-main.png';
-  public elewouLogo = '/assets/images/logo-elewou-main-dark.png';
-  public elewouIcon = '/assets/images/icon-elewou.png';
+  public elewouLogo = "/assets/images/logo-elewou-main-dark.png";
+  public elewouIcon = "/assets/images/icon-elewou.png";
 
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes: string[];
