@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
 import {
   RouteLink,
   RoutesMap,
   builLinkFromRoutesMap,
   IRouteLinkCollectionItem,
-} from 'src/app/lib/core/routes';
-import { AbstractAlertableComponent } from 'src/app/lib/core/helpers/component-interfaces';
-import { AppUIStoreManager } from 'src/app/lib/core/helpers/app-ui-store-manager.service';
-import { Collection } from 'src/app/lib/core/collections';
-import { TypeUtilHelper } from '../../../core/helpers/type-utils-helper';
-import { adminPath, backendRoutePaths, defaultPath } from '../partials-configs';
+} from "src/app/lib/core/routes";
+import { AbstractAlertableComponent } from "src/app/lib/core/helpers/component-interfaces";
+import { AppUIStoreManager } from "src/app/lib/core/helpers/app-ui-store-manager.service";
+import { Collection } from "src/app/lib/core/collections";
+import { TypeUtilHelper } from "../../../core/helpers/type-utils-helper";
+import { defaultPath } from "../partials-configs";
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
+  selector: "app-sidebar",
+  templateUrl: "./sidebar.component.html",
   styles: [],
 })
 export class SidebarComponent
@@ -25,15 +25,12 @@ export class SidebarComponent
   @Input() routesMap: RoutesMap[];
   @Input() routeDescriptions: { [index: string]: string };
   public elewouIcon =
-    'https://scontent.flfw1-1.fna.fbcdn.net/v/t1.0-9/129900309_3678495065550810_1722521212220721187_n.jpg?_nc_cat=102&ccb=3&_nc_sid=730e14&_nc_ohc=Jhfz9EmsyaMAX8BGeyd&_nc_ht=scontent.flfw1-1.fna&oh=1dafd888c9388daa883f12ebd42ceeca&oe=604B2045';
+    "https://scontent.flfw1-1.fna.fbcdn.net/v/t1.0-9/129900309_3678495065550810_1722521212220721187_n.jpg?_nc_cat=102&ccb=3&_nc_sid=730e14&_nc_ohc=Jhfz9EmsyaMAX8BGeyd&_nc_ht=scontent.flfw1-1.fna&oh=1dafd888c9388daa883f12ebd42ceeca&oe=604B2045";
 
   public dashboardRoute = `/${defaultPath}`;
-  public profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
 
   @Input() public moduleName: string;
   @Input() public applicationName: string;
-
-  public modulesBackendRoute = backendRoutePaths.modules;
 
   constructor(
     public appUIStoreManager: AppUIStoreManager,
