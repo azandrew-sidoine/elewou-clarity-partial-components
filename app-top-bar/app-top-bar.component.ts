@@ -7,7 +7,7 @@ import {
 } from "src/app/lib/core/routes";
 import { AbstractAlertableComponent } from "src/app/lib/core/helpers/component-interfaces";
 import { AppUIStoreManager } from "src/app/lib/core/helpers/app-ui-store-manager.service";
-import { backendRoutePaths, defaultPath, adminPath } from "../partials-configs";
+import { defaultPath } from "../partials-configs";
 import { Collection } from "src/app/lib/core/collections";
 import { isDefined } from "src/app/lib/core/utils";
 
@@ -40,7 +40,6 @@ export class AppTopBarComponent
   public navigationRoutes: Collection<RouteLink>;
   public routesIndexes: string[];
   public dashboardRoute = `/${defaultPath}`;
-  @Input() profileRoute = `/${defaultPath}/${adminPath.accountRoute}`;
 
   @Input() routesMap: RoutesMap[];
   @Input() routeDescriptions: { [index: string]: string };
@@ -51,8 +50,6 @@ export class AppTopBarComponent
   // #region Component outputs
   @Output() logout = new EventEmitter<boolean>();
   // #endregion Component outputs
-
-  public modulesBackendRoute = backendRoutePaths.modules;
 
   constructor(public appUIStoreManager: AppUIStoreManager) {
     super(appUIStoreManager);
