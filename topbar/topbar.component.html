@@ -4,14 +4,6 @@
     <span class="module_name title">{{ companyName }}</span>
   </div>
   <div class="header-actions hide-for-print" *ngIf="state$ | async as state">
-    <div class="user-state" *ngIf="!state?.isGuess">
-      <span class="top-hint">Connecté en tant que : </span>
-      <span class="user-name connected"> {{ state?.username }}</span>
-    </div>
-    <div class="user-actions">
-      <a (click)="actionLogout($event)" class="btn lik-btn primary-btn">
-        <clr-icon shape="logout"></clr-icon>
-      </a>
-    </div>
+    <!-- NgIf Connected -->
   </div>
 </clr-header>

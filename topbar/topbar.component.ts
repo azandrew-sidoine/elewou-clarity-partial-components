@@ -5,14 +5,9 @@ import {
   routeMapToLink,
   RouteLinkCollectionItemInterface,
 } from "src/app/lib/core/routes";
-import { AuthPathConfig, AuthService } from "src/app/lib/core/auth/core";
-import { Router } from "@angular/router";
-import { TranslationService } from "src/app/lib/core/translator";
 import { defaultPath, commonRoutes } from "../partials-configs";
 import { Collection } from "src/app/lib/core/collections";
-import { Dialog, isDefined } from "src/app/lib/core/utils";
-import { IAppUser } from "../../../core/auth/contracts/v2";
-import { map } from "rxjs/operators";
+import { isDefined } from "src/app/lib/core/utils";
 import { AppUIStateProvider } from "src/app/lib/core/ui-state";
 
 @Component({
@@ -49,27 +44,7 @@ export class AppTopBarComponent implements OnInit {
   @Input() public applicationName!: string;
   @Input() public companyName!: string;
 
-  state$ = this.auth.state$.pipe(
-    map((state) => state.user as IAppUser),
-    map((state) => ({
-      username: state?.userDetails
-        ? state?.userDetails?.firstname && state?.userDetails?.lastname
-          ? `${state?.userDetails?.firstname}, ${state?.userDetails?.lastname}`
-          : state?.userDetails?.email
-          ? state.userDetails.email
-          : state?.username
-        : state?.username,
-      isGuess: !isDefined(state),
-    }))
-  );
-
-  constructor(
-    public uiState: AppUIStateProvider,
-    private auth: AuthService,
-    private translator: TranslationService,
-    private dialog: Dialog,
-    private router: Router
-  ) {
+  constructor(public uiState: AppUIStateProvider) {
     this.navigationRoutes = new Collection();
   }
 
@@ -95,23 +70,5 @@ export class AppTopBarComponent implements OnInit {
    */
   public getRouteLinkFromMap(key: string): RouteLink {
     return this.navigationRoutes.get(key);
-  }
-
-  public redirectToLogin(): void {
-    this.router.navigate([AuthPathConfig.LOGIN_PATH], {
-      replaceUrl: true,
-    });
-    // this.uiState.endAction();
-  }
-
-  async actionLogout(event: Event): Promise<void> {
-    event.preventDefault();
-    const translation = await this.translator
-      .translate("promptLogout")
-      .toPromise();
-    if (this.dialog.confirm(translation)) {
-      this.uiState.startAction();
-      await this.auth.logout().toPromise();
-    }
   }
 }
