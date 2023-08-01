@@ -16,13 +16,13 @@ import { DetailedTablePreviewComponent } from './detailed-table-preview/detailed
     ScrollingModule
   ],
   exports: [
-    SidebarComponent,
+    // SidebarComponent,
     DatagridHeaderModule,
     DetailedTablePreviewComponent,
     TitleComponent
   ],
   declarations: [
-    SidebarComponent,
+    // SidebarComponent,
     DetailedTablePreviewComponent,
     TitleComponent
   ],
