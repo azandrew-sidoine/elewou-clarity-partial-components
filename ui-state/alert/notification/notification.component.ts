@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { map, startWith } from 'rxjs/operators';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { map, startWith, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 type PropsType = {
@@ -32,10 +32,7 @@ enum StatusCode {
                 [innerHTML]="props.message ?? '' | translate | trustHtml"
               ></span>
               <div class="alert-actions">
-                <clr-icon
-                  shape="times"
-                  (click)="onClrAlertClosedChanged(true)"
-                ></clr-icon>
+              <cds-icon shape="times" (click)="onClrAlertClosedChanged(true)"></cds-icon>
               </div>
             </clr-alert-item>
           </clr-alert>
@@ -57,6 +54,8 @@ export class AppUINotificationComponent {
     this._state$.next(state);
   }
 
+  @Output() close = new EventEmitter<any>();
+
   // Component Properties
   state$ = this._state$.asObservable().pipe(
     startWith({
@@ -71,7 +70,10 @@ export class AppUINotificationComponent {
       //   500 === (state.status ?? StatusCode.OK)
       //     ? StatusCode.BAD
       //     : state?.status,
-    }))
+    })),
+    tap((state) =>{
+      // console.log(state);
+    })
   );
 
   getAlertProps(state: Partial<PropsType>) {
@@ -126,12 +128,7 @@ export class AppUINotificationComponent {
 
   onClrAlertClosedChanged(value: boolean): void {
     if (value) {
-      this._state$.next({
-        message: '',
-        status: StatusCode.OK,
-        hasError: false,
-        hidden: true,
-      });
+      this.close.emit(value);
     }
   }
 }
