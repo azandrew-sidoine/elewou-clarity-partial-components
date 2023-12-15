@@ -18,7 +18,7 @@
                 clrVerticalNavLink
                 [routerLink]="child?.routePath"
                 routerLinkActive="active"
-                *ngIf="hasAuthorizations(child?authorizations)"
+                *ngIf="hasAuthorizations(child?.authorizations)"
               >
                 <clr-icon
                   *ngIf="child?.routeIcon"
