@@ -32,7 +32,10 @@
         </clr-vertical-nav-group>
       </ng-container>
       <ng-container
-        *ngIf="(vm.get(key)?.children ?? []).length === 0 &&  hasAuthorizations(vm.get(key)?authorizations)"
+        *ngIf="
+          (vm.get(key)?.children ?? []).length === 0 &&
+          hasAuthorizations(vm.get(key)?.authorizations)
+        "
       >
         <a
           clrVerticalNavLink
