@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { filter, map } from "rxjs/operators";
 import { commonRoutes, defaultPath } from "../partials-configs";
+import { Authorizable } from "src/app/lib/core/auth/contracts";
+import { AUTH_SERVICE } from "../../login/constants";
 import {
   RouteLink,
   RouteLinkCollectionItemInterface,
   RoutesMap,
   routeMapToLink,
 } from "../routes";
+import { AuthServiceInterface } from "../../login/contracts";
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
@@ -31,6 +34,7 @@ export class SidebarComponent implements OnInit {
   @Input() public applicationName!: string;
 
   private _routesMap$ = new BehaviorSubject<RoutesMap[]>([]);
+  private userAuthorizations!: string[];
 
   state$ = this._routesMap$.asObservable().pipe(
     filter((_routes) => _routes.length !== 0 && !!this.routeDescriptions),
@@ -47,10 +51,24 @@ export class SidebarComponent implements OnInit {
     })
   );
 
+  constructor(@Inject(AUTH_SERVICE) private auth: AuthServiceInterface) {
+    this.auth.signInState$.subscribe((state) => {
+      this.userAuthorizations = state.scopes;
+    });
+  }
+
   ngOnInit(): void {
     if (this.routesMap) {
       this._routesMap$.next(this.routesMap);
     }
+  }
+
+  hasAuthorizations(authorizations: string[]) {
+    let alltrues: number = 0;
+    authorizations.forEach((item: string) => {
+      if (this.userAuthorizations.includes(item)) ++alltrues;
+    });
+    return alltrues == 0 ? false : true;
   }
 
   isFirstRoute(routes: RoutesMap[], item: RoutesMap): boolean {

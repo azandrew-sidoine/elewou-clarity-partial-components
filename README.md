@@ -19,11 +19,10 @@ import { ClrSmartGridModule } from "./path/to/your/partials/module/clr-smart-gri
 @NgModule({
   imports: [
     // ...
-    ClrSmartGridModule
-  ]
+    ClrSmartGridModule,
+  ],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 Example:
@@ -35,11 +34,12 @@ At it basic usage we simply add the component to our html template as most compo
 <!-- Code -->
 <!-- configure the smart grid using basic configurations -->
 <azlabs-clr-smart-grid
-    [columns]="columns"
-    [data]="data"
-    (dgRefresh)="onDgRefresh($event)"
-    (selectedChange)="onSelectedChanges($event)">
-  </azlabs-clr-smart-grid>
+  [columns]="columns"
+  [data]="data"
+  (dgRefresh)="onDgRefresh($event)"
+  (selectedChange)="onSelectedChanges($event)"
+>
+</azlabs-clr-smart-grid>
 ```
 
 ```ts
@@ -52,12 +52,11 @@ import { GridColumnType } from "./lib/views/partials/clr-smart-grid";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-
   // Columns configuration
   public columns: GridColumnType[] = [
     {
       title: "Nom",
-      label: "lastname"
+      label: "lastname",
     },
     {
       title: "Prénoms",
@@ -75,51 +74,50 @@ export class AppComponent {
   // Test data
   public data = [
     {
-    id: 1,
-    firstname: "RODRIGUE",
-    lastname: "KOLANI",
-    type: "INDIVIDUEL",
-    phone: "+22892146591",
-    sex: "M",
-    nationality: "TG",
-  },
-  {
-    id: 2,
-    firstname: "SONATA",
-    lastname: "PAKIONA",
-    type: "INDIVIDUEL",
-    phone: "+22890250454",
-    sex: "M",
-    nationality: "TG",
-  },
-  {
-    id: 3,
-    firstname: "ANIKA",
-    lastname: "AGBAGBE",
-    phone: "+22898757475",
-    type: "INDIVIDUEL",
-    sex: "F",
-    nationality: "TG",
-  },
-  // ...
+      id: 1,
+      firstname: "RODRIGUE",
+      lastname: "KOLANI",
+      type: "INDIVIDUEL",
+      phone: "+22892146591",
+      sex: "M",
+      nationality: "TG",
+    },
+    {
+      id: 2,
+      firstname: "SONATA",
+      lastname: "PAKIONA",
+      type: "INDIVIDUEL",
+      phone: "+22890250454",
+      sex: "M",
+      nationality: "TG",
+    },
+    {
+      id: 3,
+      firstname: "ANIKA",
+      lastname: "AGBAGBE",
+      phone: "+22898757475",
+      type: "INDIVIDUEL",
+      sex: "F",
+      nationality: "TG",
+    },
+    // ...
   ];
 
   // Listen to datagrid refresh events
   onDgRefresh(event: unknown) {
     console.log(event);
   }
-  
+
   // Listen to data grid selection changes events
   onSelectedChanges(event: unknown | unknown[]) {
     console.log(event);
   }
 }
-
 ```
 
 With the basic example show on top, angular with render a datagrid to the view with configured data.
 
-* Data Transformation
+- Data Transformation
 
 For most application data transformation may be required to provide formatted visual data to end users. Therefore datagrid columnsconfiguration support a `transform` property which can accept string value as well as function that apply transformation to data before showing it to end user.
 As for the example above, we can simply add transformation as follow:
@@ -155,13 +153,13 @@ Note: For `transform` property as string, basic angular pipes are supported as w
 
 > 'date', 'datetime', 'timeago', 'month', 'masked', 'safecontent', 'saferesource', 'uppercase', 'lowercase', 'currency', 'decimal', 'json', 'percent', 'slice', 'async'.
 
-* Data grid customization
+- Data grid customization
 
 To customize the datagrid an input property is used:
 
 ```html
 <azlabs-clr-smart-grid
-    [config]="{
+  [config]="{
       sizeOptions: [5, 10, 50, 100, 150],
       pageSize: 5,
       hasExpandableRows: false,
@@ -169,11 +167,12 @@ To customize the datagrid an input property is used:
       selectable: true,
       singleSelection: false
     }"
-    [columns]="columns"
-    [data]="data"
-    (dgRefresh)="onDgRefresh($event)"
-    (selectedChange)="onSelectedChanges($event)">
-  </azlabs-clr-smart-grid>
+  [columns]="columns"
+  [data]="data"
+  (dgRefresh)="onDgRefresh($event)"
+  (selectedChange)="onSelectedChanges($event)"
+>
+</azlabs-clr-smart-grid>
 ```
 
 The Type defintion for datagrid customization is as follow:
@@ -200,7 +199,7 @@ export type GridConfigType = {
 };
 ```
 
-* Template customization
+- Template customization
 
 Part of the datagrid such as action bar, action button, expandable row space, details panel, etc... are easily customizable using angular template directives to project content in the datagrid. Here is a basic example:
 
